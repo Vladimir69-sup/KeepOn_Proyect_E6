@@ -1,0 +1,18 @@
+.contenedor-encabezado{
+    background-color: #0a1196;
+    border-radius: 15px;
+    height: 100px;
+    padding: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    
+}
+
+.buscador{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
