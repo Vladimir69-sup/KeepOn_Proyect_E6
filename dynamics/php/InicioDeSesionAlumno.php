@@ -9,14 +9,16 @@
     <link rel="stylesheet" href="../../statics/css/InicioDeSesionAlumno.css">
 	</head>
 <body>
-    <h2>Inicio de Sesion</h2>
-    <img src="../../../img/monkey-alumno.png" width="150px">
-    <form>
-        <label for="usuario">Usuario:</label><br>
-        <input type="text" id="username" name="username" placeholder="no. de cuenta"><br>
-        <label for="contraseña">Contraseña:</label><br>
-        <input type="password" id="pwd" name="pwd" placeholder="dd/mm/aaaa"><br>
-        <input type="submit" value="Inicia Sesion">
-    </form>
+    <div id="contenedor-inicio-sesion">
+        <h2>Inicio de Sesion</h2>
+        <img src="../../../img/monkey-alumno.png" width="150px">
+        <form>
+            <label for="usuario">Usuario:</label><br>
+            <input type="text" id="username" name="username" placeholder="no. de cuenta"><br>
+            <label for="contraseña">Contraseña:</label><br>
+            <input type="password" id="pwd" name="pwd" placeholder="dd/mm/aaaa"><br>
+            <input type="submit" value="Inicia Sesion">
+        </form>  
+    </div>
 </body>
 </html>

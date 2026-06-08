@@ -1,12 +1,27 @@
 *{
     background-color: rgb(255,255,255);
 }
+#contenedor-inicio-sesion
+{
+  width:100vw;
+  height: 80vh;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 
+}
 form 
 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   border-radius: 5px;
   background-color: rgb(217,217,217);
   padding: 2px;
+  width: 40%;
+
 }
 label
 {
@@ -20,7 +35,7 @@ h2
 
 input[type=text]
 {
-  width: 15%;
+  width: 50%;
   padding: 5px;
   margin: 10px 0;
   box-sizing: border-box;
@@ -31,7 +46,7 @@ input[type=text]
 }
 input[type=password] 
 {
-  width: 15%;
+  width: 50%;
   padding: 5px;
   margin: 10px 0;
   box-sizing: border-box;
@@ -41,7 +56,7 @@ input[type=password]
   border-radius: 8px;
 }
 input[type=submit] {
-  width: 9%;
+  width: 30%;
   background-color: rgb(122, 141, 236);
   color: white;
   padding: 5px;
