@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#barra_superior 
+{
+    position: static;
+    background: rgb(33, 52, 126);
+    margin: 0px;
+    width: 100%;
+    height: 10vw;
+    display: flex; 
+    align-items: center; /*para acomodarlos en el centro verticalmente  */
+}
+.logo 
+{
+    position: static;
+    width: auto;
+    height: 60px;
+    margin: 10px;
+}
+
+#buscador
+{
+    flex-grow: 1; /*estira/encoje ocupando el espacio disponible restante, respetando a los static */
+    margin-right: 20px; 
+    border-radius: 5px;
+    font-size: 15px;
+    background: rgb(151,152,156);
+    height: 30px;
+    border: 0px; 
+    padding: 10px;/*DENTRO del imput para que las letras no esten pegadas a la orilla */
+}
+
+#lupa 
+{
+    position: static; 
+    width: auto;
+    height: 30px;
+    border-radius: 5px;
+}
+
+#user 
+{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
