@@ -1,0 +1,241 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#barra_superior 
+{
+    position:static;
+    background: rgb(33, 52, 126);
+    margin: 0px;
+    width: 100%;
+    height: 100px;
+    display: flex; 
+    align-items: center; /*para acomodarlos en el centro verticalmente  */
+    
+}
+
+.logo 
+{
+    position: static;
+    width: auto;
+    height: 60px;
+    margin: 10px;
+}
+
+#menu_imagen
+{
+    position: static;
+    width: auto;
+    height: 40px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#buscador
+{
+    flex-grow: 1; /*estira/encoje ocupando el espacio disponible restante, respetando a los static */
+    margin-right: 20px; 
+    border-radius: 5px;
+    font-size: 15px;
+    background: rgb(151,152,156);
+    height: 30px;
+    border: 0px; 
+    padding: 10px;/*DENTRO del imput para que las letras no esten pegadas a la orilla */
+}
+
+#lupa 
+{
+    position: static; 
+    width: auto;
+    height: 30px;
+    border-radius: 5px;
+}
+
+#user 
+{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+#primero_barra_lateral
+{
+    width: 100%;
+    border-bottom: 3px solid rgb(255, 255, 255); /*para delimitar el grosor*/
+    margin-top: 20px;
+}
+
+
+.bloque_linea
+{
+
+    width: 100%;
+    border-bottom: 3px solid rgb(255, 255, 255); 
+    padding: 10px;
+    color:white;
+    
+}
+
+#barra_lateral,h4
+{
+  font-family: 'Arial', serif;
+}
+
+/* PARA MOSTRAR Y OCULTAR LA BARRA LATERAL */
+#menu_lateral
+{
+    display:none;
+}
+#barra_lateral  
+{
+    display: none;
+    position: absolute;
+    top: 100px;
+    width: 300px;
+    height: 100%;
+    background-color: rgb(33, 67, 134);
+}
+
+#menu_lateral:checked ~ #barra_lateral
+{
+    display: block;
+   left:0;
+}
+
+.enlace
+{
+    color: white; 
+    cursor: pointer;
+}
+.enlace:hover
+{   color: rgb(182, 158, 38);}
+
+
+/*Recuadros que te direccionan a otras paginas(los BOTONES)*/
+h2
+{
+    color: white;
+    text-align: center;
+}
+
+#primero 
+{
+    display: flex; /*para colocar los recuadros en fila*/
+    margin:0px;
+    height: 195px;
+}
+#segundo
+{
+    display: flex; /*para colocar los recuadros en fila*/
+    margin:0px;
+    height: 180px;
+}
+#tercero
+{
+    display: flex; /*para colocar los recuadros en fila*/
+    margin:0px;
+    height: 180px;
+}
+
+#contacto_profe
+{
+    text-align: left;
+    margin-bottom: 0px;
+    margin-left: 40px;
+    margin-right: 30px;
+    margin-top: 30px;
+    width: 45%;
+    height:83%;
+    background: rgb(20,10,114);
+    border-radius: 5px;
+}
+#actividades
+{
+    margin :0px;
+    margin-left: 40px;
+    margin-right: 30px;
+    margin-bottom: 0px;
+    margin-top: 13px;
+    width: 60%;
+    height:85%;
+    background: rgb(250, 183, 40);
+    border-radius: 5px;
+}
+#formulario
+{
+    text-align: left;
+    background: rgb(177,128, 49);
+    flex-grow: 1;
+    height:175%;
+    margin-top: 13px;
+    margin-bottom:30px ;
+    margin-right: 40px;
+    border-radius: 5px;
+}
+#recursos
+{
+   margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 40px;
+    margin-top: 30px;
+    flex-grow: 1;
+    height:83%;
+    background: rgb(0,32,73);
+    border-radius: 5px;
+}
+#masEte
+{
+    background: rgb(33, 52, 126);
+    margin :0px;
+    margin-left: 40px;
+    margin-right: 30px;
+    margin-top: 13px;
+    margin-bottom: 30px;
+    width: 60%;
+    height:75%;
+    
+    border-radius: 5px;
+}
+
+#activar_contacta{display: none;}
+
+#contacto_profe label 
+{
+    cursor: pointer;
+    display: block;
+}
+
+/*#recuadro_mensaje 
+{
+    display: none; 
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+#activar_contacto:checked ~ #recuadro_mensaje {display: flex;}
+
+#texto_mensaje
+{
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+#btn_enviar 
+{
+    background-color: rgb(33, 67, 134);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-end;
+}*/
