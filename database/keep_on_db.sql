@@ -1,3 +1,4 @@
+DROP DATABASE keep_on_db;
 CREATE DATABASE IF NOT EXISTS keep_on_db;
 USE keep_on_db;	
 
@@ -9,7 +10,6 @@ CREATE TABLE infoGeneralUsuario
     nombre VARCHAR(50) NOT NULL,
     primerApellido VARCHAR(50) NOT NULL,
     segundoApellido VARCHAR(50),
-    funcion INT  NOT NULL CHECK(funcion BETWEEN 1 AND 3),
     PRIMARY KEY (idUsuario)
 );
 
@@ -18,6 +18,8 @@ CREATE TABLE infoMaestro
 (
     idMaestro INTEGER NOT NULL AUTO_INCREMENT,
     numTrabajador VARCHAR(30) NOT NULL,
+    idUsuario INT NOT NULL,
+    FOREIGN KEY(idUsuario) REFERENCES infoGeneralUsuario(idUsuario),
     PRIMARY KEY(idMaestro)
 );
 
@@ -35,7 +37,9 @@ CREATE TABLE infoAlumno
     idAlumno INTEGER NOT NULL AUTO_INCREMENT,
     numeroCuenta INTEGER NOT NULL,
     idGrupo INTEGER NOT NULL,
+    idUsuario INT NOT NULL,
     FOREIGN KEY (idGrupo) REFERENCES grupo(idGrupo),
+    FOREIGN KEY(idUsuario) REFERENCES infoGeneralUsuario(idUsuario),	
     PRIMARY KEY(idAlumno)
 );
 
@@ -43,6 +47,8 @@ CREATE TABLE infoAdministrador
 (
     idAdmin INTEGER NOT NULL AUTO_INCREMENT,
     numTrabajador VARCHAR(30) NOT NULL,
+    idUsuario INT NOT NULL,
+    FOREIGN KEY(idUsuario) REFERENCES infoGeneralUsuario(idUsuario),
     PRIMARY KEY(idAdmin)
 ); 
 
@@ -61,12 +67,12 @@ CREATE TABLE actividad
 
 CREATE TABLE actividadAlumno      
 (
-	idActividad_alumno INTEGER NOT NULL AUTO_INCREMENT,
+	idActividadAlumno INTEGER NOT NULL AUTO_INCREMENT,
 	entregado BOOL,
         calificacion INTEGER CHECK(calificacion BETWEEN 0 AND 10),
     	idActividad INTEGER NOT NULL,
 	FOREIGN KEY(idActividad) REFERENCES actividad(idActividad),
-	PRIMARY KEY(idActividad_alumno)
+	PRIMARY KEY(idActividadAlumno)
 );	
 
 --FORMULARIOS
