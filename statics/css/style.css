@@ -1,0 +1,264 @@
+
+.contenedor-modulo{
+    width: 100%;
+    height: 400px;
+    border-radius: 30px;
+    background-color: #D9D9D9;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: fit-content;
+    justify-content: space-around;
+    overflow: scroll;
+    align-items: center;
+}
+
+.crear-tarea{
+    width: 200px;
+    height: 350px;
+    margin: 10px;
+    padding: 15px;
+    font-size: 30px;
+    color:#ffffff;
+    background-color: #94306D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.crear-tarea:hover{
+    background-color: #B23A8B;
+    cursor: pointer;
+}
+
+.editar-tarea{
+    width: 200px;
+    height: 350px;
+    margin: 10px;
+    color:#ffffff;
+    background-color: #94306D;
+    padding: 15px;
+    border-radius: 30px;
+}
+
+.editar-tarea:hover{
+    background-color: #B23A8B;
+    cursor: pointer;
+}
+
+.boton-borrar{
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+}
+
+.boton-borrar:hover{
+    background-color: #b23a3a;
+    cursor: pointer;
+}
+
+#crear-modulo{
+    width: 98%;
+    height: 50px;
+    margin: 10px;
+    color:#ffffff;
+    background-color: #232e97;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#crear-modulo:hover{
+    background-color: #2e3db5;
+    cursor: pointer;
+}
+
+
+
+
+.informacion-actividad{
+    display: flex;
+    justify-content:space-around;
+    background-color: #D9D9D9;
+    padding: 25px;
+    border-radius: 20px;
+    margin: 30px;
+}
+
+.lado-izquierdo{
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.lado-derecho{
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.footer-actividades{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 20px;
+}
+
+input, textarea{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+textarea{
+    height: 250px;
+    resize: none;
+}
+
+.botones-footer{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 20px;
+}
+
+.adjuntar-archivo{
+    width: 98%;
+    height: 50px;
+    margin: 10px;
+    color:#ffffff;
+    background-color: #232e97;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+}
+
+.adjuntar-archivo:hover{
+    background-color: #2e3db5;
+    cursor: pointer;
+}
+
+#borrar-actividad{
+    width: 150px;
+    height: 40px;
+    color:#ffffff;
+    background-color: #b23a3a;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#borrar-actividad:hover{
+    background-color: #b23a3a;
+    cursor: pointer;
+}
+
+#publicar-actividad{
+    width: 150px;
+    height: 40px;
+    color:#ffffff;
+    background-color: #FAB728;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#publicar-actividad:hover{
+    background-color: #fbbd28;
+    cursor: pointer;
+}
+
+#guardar-actividad{
+    width: 150px;
+    height: 40px;
+    color:#ffffff;
+    background-color: #232e97;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#guardar-actividad:hover{
+    background-color: #2e3db5;
+    cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+}
+
+.revisar-actividad{
+    width: 100%;
+    height: 40px;
+    color:#ffffff;
+    background-color: #65CC35;
+    padding: 15px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.revisar-actividad:hover{
+    background-color: #65cc3563;
+    cursor: pointer;
+}
+
+.contenedor-entregas{
+    width: 100%;
+    height: 400px;
+    background-color: #D9D9D9;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow: scroll;
+}
+
+table, tr {
+    border: 3px solid #232e97;
+    border-collapse: collapse;
+    margin: 20px;
+    font-size: 25px;
+    text-align: center;
+}
+
+th, td {
+    padding: 15px;
+}
+
+.contenedor-sin-entregar{
+    width: 100%;
+    height: 400px;
+    background-color: #D9D9D9;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow: scroll;
+}
+
+.contenedor-sin-entregar td{
+    color: #b23a3a;
+}
