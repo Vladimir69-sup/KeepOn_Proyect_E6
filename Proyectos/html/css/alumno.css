@@ -66,8 +66,6 @@
     border-bottom: 3px solid rgb(255, 255, 255); /*para delimitar el grosor*/
     margin-top: 20px;
 }
-
-
 .bloque_linea
 {
 
@@ -199,11 +197,17 @@ h2
     width: 60%;
     height:75%;
     border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    
 }
 #ete
 {
-    position: flex-start;
+     margin-left: 40%;
     width:auto;
-    height:80px;
+    height:100px;
 }
-
+#form
+{
+    
+}

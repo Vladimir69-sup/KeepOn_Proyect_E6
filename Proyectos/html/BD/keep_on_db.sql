@@ -1,12 +1,15 @@
+CREATE DATABASE IF NOT EXISTS keep_on_db;
+USE keep_on_db;	
+
 CREATE TABLE infoGeneralUsuario
 (
-    idUsuario INTEGER NOT NULL AUTO_INCREMENT,
+    idUsuario INT NOT NULL AUTO_INCREMENT,
     fechaNacimiento VARCHAR(10) NOT NULL,
     correo VARCHAR(100) NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     primerApellido VARCHAR(50) NOT NULL,
     segundoApellido VARCHAR(50),
-    funcion INTEGER CHECK(funcion BETWEEN 1 AND 3)NOT NULL,
+    funcion INT  NOT NULL CHECK(funcion BETWEEN 1 AND 3),
     PRIMARY KEY (idUsuario)
 );
 
@@ -15,17 +18,27 @@ CREATE TABLE infoMaestro
 (
     idMaestro INTEGER NOT NULL AUTO_INCREMENT,
     numTrabajador VARCHAR(30) NOT NULL,
-      PRIMARY KEY(idMaestro)
+    PRIMARY KEY(idMaestro)
 );
+
+CREATE TABLE grupo
+(
+    idGrupo INTEGER NOT NULL AUTO_INCREMENT,
+    nombreGrupo VARCHAR(3) NOT NULL,
+    idMaestro INTEGER NOT NULL,      
+    FOREIGN KEY(idMaestro) REFERENCES infoMaestro(idMaestro),    
+    PRIMARY KEY(idGrupo)
+);
+
 CREATE TABLE infoAlumno
 (
-    idAlumno INTEGER AUTO_INCREMENT NOT NULL,
+    idAlumno INTEGER NOT NULL AUTO_INCREMENT,
     numeroCuenta INTEGER NOT NULL,
     idGrupo INTEGER NOT NULL,
-    FOREIGN KEY (idGrupo)
-        REFERENCES grupo(idGrupo),
+    FOREIGN KEY (idGrupo) REFERENCES grupo(idGrupo),
     PRIMARY KEY(idAlumno)
 );
+
 CREATE TABLE infoAdministrador
 (
     idAdmin INTEGER NOT NULL AUTO_INCREMENT,
@@ -33,35 +46,26 @@ CREATE TABLE infoAdministrador
     PRIMARY KEY(idAdmin)
 ); 
 
-CREATE TABLE grupo
-(
-    idGrupo INTEGER NOT NULL AUTO_INCREMENT,
-    nombreGrupo VARCHAR(3) NOT NULL,
-    idMaestro INTEGER NOT NULL,      
-    FOREIGN KEY(idMaestro)          /*no lleva coma entre esta y references*/
-    	REFERENCES infoMaestro(idMaestro),
-    PRIMARY KEY(idGrupo)
-);
+
 ---ACTIVIDADES
 CREATE TABLE actividad         
 (
     idActividad INTEGER NOT NULL AUTO_INCREMENT,
     hora VARCHAR(5) NOT NULL,
     fecha VARCHAR(8) NOT NULL,
-    modulo INTEGER CHECK(modulo BETWEEN 1 AND 5) NOT NULL,
+    modulo INTEGER NOT NULL CHECK(modulo BETWEEN 1 AND 5)	,
     idGrupo INTEGER NOT NULL,
-    FOREIGN KEY(idGrupo)
-    	REFERENCES grupo(idGrupo),
+    FOREIGN KEY(idGrupo) REFERENCES grupo(idGrupo),
     PRIMARY KEY(idActividad)
 );
+
 CREATE TABLE actividadAlumno      
 (
-	idActividad_alumno INTEGER AUTO_INCREMENT NOT NULL,
+	idActividad_alumno INTEGER NOT NULL AUTO_INCREMENT,
 	entregado BOOL,
-    calificacion INTEGER CHECK(calificacion BETWEEN 0 AND 10),
-    idActividad INTEGER NOT NULL,
-	FOREIGN KEY(idActividad)
-		REFERENCES actividad(idActividad),
+        calificacion INTEGER CHECK(calificacion BETWEEN 0 AND 10),
+    	idActividad INTEGER NOT NULL,
+	FOREIGN KEY(idActividad) REFERENCES actividad(idActividad),
 	PRIMARY KEY(idActividad_alumno)
 );	
 
@@ -70,8 +74,7 @@ CREATE TABLE formulario
 (
 	idFormulario INTEGER NOT NULL AUTO_INCREMENT,
 	idGrupo INTEGER,
-	FOREIGN KEY (idGrupo)
-		REFERENCES grupo(idGrupo),
+	FOREIGN KEY (idGrupo) REFERENCES grupo(idGrupo),
 	descripcion TEXT NOT NULL,
 	PRIMARY KEY(idFormulario)
 );
@@ -82,67 +85,62 @@ CREATE TABLE tipoPregunta
 	tipo VARCHAR(10) NOT NULL,
 	PRIMARY KEY(idTipoPregunta)
 );
+
 CREATE TABLE pregunta
 (
 	idPregunta INTEGER NOT NULL AUTO_INCREMENT,
 	pregunta TEXT NOT NULL,
 	idFormulario INTEGER NOT NULL,
-	FOREIGN KEY (idFormulario)
-		REFERENCES formulario(idFormulario),
+	FOREIGN KEY (idFormulario) REFERENCES formulario(idFormulario),
 	idTipoPregunta INTEGER NOT NULL,
-	FOREIGN KEY(idTipoPregunta)
-		REFERENCES tipoPregunta(idTipoPregunta),
+	FOREIGN KEY(idTipoPregunta) REFERENCES tipoPregunta(idTipoPregunta),
 	PRIMARY KEY(idPregunta)
 );
+
 CREATE TABLE opcionPregunta
 (
 	idOpcionPregunta INTEGER NOT NULL AUTO_INCREMENT,
 	opcion TEXT,
 	idPregunta INTEGER NOT NULL,
-	FOREIGN KEY (idPregunta)
-		REFERENCES pregunta(idPregunta),
+	FOREIGN KEY (idPregunta) REFERENCES pregunta(idPregunta),
 	PRIMARY KEY(idOpcionPregunta)
 );
+
 CREATE TABLE respuestaUsuario
 (
-	idRespuestaUsuario INTEGER NOT NULL AUTO_INCREMENT,
-    textoRespuesta TEXT NOT NULL, 
-	idUsuario INTEGER NOT NULL,
-	FOREIGN KEY  (idUsuario)
-		REFERENCES infoGeneralUsuario(idUsuario),
-	idPregunta INTEGER NOT NULL,
-	FOREIGN KEY (idPregunta)
-		REFERENCES pregunta(idPregunta),
-	idOpcionPregunta INTEGER NOT NULL,
-	FOREIGN KEY  (idOpcionPregunta)
-		REFERENCES opcionPregunta(idOpcionPregunta),
-	PRIMARY KEY(idRespuestaUsuario)
+    idRespuestaUsuario INTEGER NOT NULL AUTO_INCREMENT,
+    textoRespuesta TEXT NOT NULL,
+    idUsuario INTEGER NOT NULL,
+    FOREIGN KEY  (idUsuario) REFERENCES infoGeneralUsuario(idUsuario),
+    idPregunta INTEGER NOT NULL,
+    FOREIGN KEY (idPregunta) REFERENCES pregunta(idPregunta),
+    idOpcionPregunta INTEGER NOT NULL,
+    FOREIGN KEY  (idOpcionPregunta) REFERENCES opcionPregunta(idOpcionPregunta),
+    PRIMARY KEY(idRespuestaUsuario)
 );
 
 --AYUDAS EXTRAS 
 CREATE TABLE comentario 
- INSER
 (
-	idComentario INTEGER AUTO_INCREMENT NOT NULL,
-	comentario TEXT NOT NULL ,
-	idAlumno INTEGER NOT NULL,
-	FOREIGN KEY (idAlumno)
-		REFERENCES infoAlumno(idAlumno),
-	idMaestro INTEGER NOT NULL,
-    FOREIGN KEY (idMaestro)
-		REFERENCES infoMaestro(idMaestro),
-	PRIMARY KEY(idComentario)
+     idComentario INTEGER AUTO_INCREMENT NOT NULL,
+     comentario TEXT NOT NULL ,
+     idAlumno INTEGER NOT NULL,
+     FOREIGN KEY (idAlumno) REFERENCES infoAlumno(idAlumno),
+     idMaestro INTEGER NOT NULL,
+     FOREIGN KEY (idMaestro) REFERENCES infoMaestro(idMaestro),
+     PRIMARY KEY(idComentario)
 );
+
 CREATE TABLE recursos
 (
-	idRecurso INTEGER AUTO_INCREMENT NOT NULL,
-	titulo VARCHAR(30) NOT NULL,
-	url TEXT NOT NULL,
-    idGrupo INTEGER NOT NULL,
-    FOREIGN KEY (idGrupo)
-        REFERENCES grupo(idGrupo),
-    PRIMARY KEY(idRecurso)
+     idRecurso INTEGER NOT NULL AUTO_INCREMENT,
+     titulo VARCHAR(30) NOT NULL,
+     url TEXT NOT NULL,
+     idGrupo INTEGER NOT NULL,
+     FOREIGN KEY (idGrupo) REFERENCES grupo(idGrupo),
+     PRIMARY KEY(idRecurso)
 );
+
 CREATE TABLE asesoria
 (
     idAsesoria INTEGER NOT NULL AUTO_INCREMENT,
@@ -150,11 +148,9 @@ CREATE TABLE asesoria
     fecha VARCHAR(8) NOT NULL,
     tema VARCHAR(60) NOT NULL,
     idMaestro INTEGER NOT NULL,
-    FOREIGN KEY(idMaestro)
-        REFERENCES infoMaestro(idMaestro),
+    FOREIGN KEY(idMaestro) REFERENCES infoMaestro(idMaestro),
     idAlumno INTEGER,
-    FOREIGN KEY(idAlumno)
-        REFERENCES infoAlumno(idAlumno),
+    FOREIGN KEY(idAlumno) REFERENCES infoAlumno(idAlumno),
     PRIMARY KEY(idAsesoria)
 );
 
@@ -179,7 +175,7 @@ CREATE TABLE mensajeAlumno
 CREATE TABLE respuestaProfesor
 (
    idRespuestaProfesor INT NOT NULL AUTO_INCREMENT,
-   idMensajeAlumno NOT NULL, 
+   idMensajeAlumno INT NOT NULL, 
    idMensaje INT NOT NULL, 
    FOREIGN KEY (idMensajeAlumno) REFERENCES mensajeAlumno(idMensajeAlumno),
    FOREIGN KEY (idMensaje) REFERENCES mensaje(idMensaje),
@@ -189,13 +185,13 @@ CREATE TABLE respuestaProfesor
 -- poblar tabla tipo pregunta 
 INSERT INTO formulario(descripcion)
 VALUES 
-    ("Cuestionario para obtener información del alumnado del estudio técnico en computación que permita
-        desarrollar mejores modelos de enseñanza y aprendizaje adaptado"),
+    ("Cuestionario para obtener información del alumnado del estudio técnico en computación que permita desarrollar mejores modelos de enseñanza y aprendizaje adaptado");
+	
 INSERT INTO tipoPregunta(tipo)
 VALUES
-    ('radio'), --1
-    ('checkbox'),--2
-    ('textarea'),--3
+    ('radio'), 
+    ('checkbox'),
+    ('textarea');
 
 INSERT INTO pregunta(pregunta,idFormulario,idTipoPregunta)
 VALUES
@@ -211,7 +207,7 @@ VALUES
 ('10. ¿Qué suele distraerte más?',1,2),
 ('11. ¿Cómo consideras tu organización para entregar tareas?',1,1),
 ('12. ¿Cuáles consideras que son tus principales fortalezas académicas? (Marca máximo 5)',1,2),
-('13. Menciona la habilidad académica en la que más destacas',1,3),--text 
+('13. Menciona la habilidad académica en la que más destacas',1,3),
 ('14. ¿Cuáles consideras que son tus principales dificultades?',1,2),
 ('15. ¿Qué materias se te dificultan más?',1,2),
 ('16. ¿Por qué se te dificultan esas materias?',1,2),
@@ -224,11 +220,11 @@ VALUES
 ('23. ¿Cuál es tu principal medio de transporte?',1,1),
 ('24. ¿Qué tipo de apoyo consideras que te ayudaría más a mejorar tu desempeño?',1,1),
 ('25. ¿Hay alguna situación personal o académica que consideres importante
- que tus profesores conozcan para apoyarte mejor?',1,3); --text
+ que tus profesores conozcan para apoyarte mejor?',1,3);
 
 INSERT INTO opcionPregunta(opcion,idPregunta)
 VALUES 
-    ("Menos de 1 hora",1),-- la tabla lo infiere pero se incia para q sepa :)
+    ("Menos de 1 hora",1),
     ("1 a 2 horas",1),
     ("2 a 3 horas",1),
     ("3 a 4 horas",1),
@@ -238,7 +234,7 @@ VALUES
     ("Biblioteca",2),
     ("Escuela",2),
     ("Casa de un familiar o amigo",2),
-    (" Otro:",2),--- texto- respuesta 
+    (" Otro:",2),
 
     ("Mañana",3),
     ("Tarde",3),
@@ -280,7 +276,7 @@ VALUES
     ("Otro:",8),
 
     ("Nunca",9),
-    ("Rara vez",9),
+        ("Rara vez",9),
     ("Algunas veces",9),
     ("Frecuentemente",9),
     ("Siempre",9),
@@ -311,8 +307,6 @@ VALUES
     ("Disciplina",12),
     ("Aprendizaje autónomo",12),
     ("Otra:",12),
-
-    ---pregunta 13
 
     ("Distracción",14),
     ("Falta de organización",14),
