@@ -37,14 +37,26 @@
     width: 45%;
 }
 .editar-perfil{
-    background-color: #002B79;
+    background-color:  #002B79;
     color: white;
     border-radius: 20px;
     border: none;
-    height: 30px;
-    align-self: flex-end;
-    margin-bottom: 30px;
-    margin-right: 35px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+}
+.guardar-foto{
+    background-color:  #FAB728;
+    color: white;
+    border-radius: 20px;
+    border: none;
+    height: 40px;
+    width: max-content;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: none;
 }
 #formulario-condiciones{
     background-color: #60883F;
@@ -67,4 +79,14 @@
     width: 15vw;
     height: auto;
     border-radius: 50%;
+}
+.mostrar-abajo{
+    align-self: flex-end;
+    padding-bottom: 25px;
+    padding-right: 15px;
+    display: flex;
+    gap: 20px
+}
+#inpt-ftalumno:valid ~ .guardar-foto{
+    display: block;
 }
