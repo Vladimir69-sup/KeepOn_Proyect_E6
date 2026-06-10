@@ -44,7 +44,9 @@
                 <p>El cuestionario aún no ha sido resuelto</p>
             </div>
             <div class="inferior-derecho">
-                <button id="formulario-condiciones">Formulario Condiciones de Estudio</button>
+                <a href="FormularioCondiciones.php?id_formulario=1">
+                    <button id="formulario-condiciones">Formulario Condiciones de Estudio</button>
+                </a>
                 <p>Notas de tu profesor: </p>
                 <div class="notas-profesor">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fu</p>
