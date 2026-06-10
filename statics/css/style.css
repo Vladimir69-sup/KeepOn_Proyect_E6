@@ -174,24 +174,6 @@ textarea{
     width: 150px;
     height: 40px;
     color:#ffffff;
-    background-color: #FAB728;
-    padding: 15px;
-    border-radius: 30px;
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#publicar-actividad:hover{
-    background-color: #fbbd28;
-    cursor: pointer;
-}
-
-#guardar-actividad{
-    width: 150px;
-    height: 40px;
-    color:#ffffff;
     background-color: #232e97;
     padding: 15px;
     border-radius: 30px;
@@ -201,30 +183,13 @@ textarea{
     align-items: center;
 }
 
-#guardar-actividad:hover{
+#publicar-actividad:hover{
     background-color: #2e3db5;
     cursor: pointer;
 }
 
 a{
     text-decoration: none;
-}
-
-.revisar-actividad{
-    width: 100%;
-    height: 40px;
-    color:#ffffff;
-    background-color: #65CC35;
-    padding: 15px;
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.revisar-actividad:hover{
-    background-color: #65cc3563;
-    cursor: pointer;
 }
 
 .contenedor-entregas{
@@ -261,4 +226,13 @@ th, td {
 
 .contenedor-sin-entregar td{
     color: #b23a3a;
+}
+/* CLase para la seleccion de modulos */
+select {
+    padding: 20px;
+    width: 100%; 
+    border: 2px solid #000000;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    font-size: 20px;
 }

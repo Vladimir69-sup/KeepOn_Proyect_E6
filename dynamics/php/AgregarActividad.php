@@ -22,18 +22,45 @@
         <div class="lado-derecho">
             <label>Fecha Entrega:</label>
             <input type="date">
+            <label>Hora de Entrega:</label>
+            <input type="time">
 
-            <label>Puntos:</label>
-            <input type="numbre" value="0">
+            <label for="modulo">Módulo:</label>
+            <select class="modulo" name="modulo" id="modulo">
+                <option value="1">Modulo 1</option>
+                <option value="2">Modulo 2</option>
+                <option value="3">Modulo 3</option>
+                <option value="4">Modulo 4</option>
+                <option value="5">Modulo 5</option>
+            </select>
 
-            <a class="revisar-actividad" href="RevisarEntregas.php">REVISAR LAS ENTREGAS</a>
+            <label for="grupo:">Grupo:</label>
+            <?php
+                include './conexion.php';
+
+                $maestroActual=1;
+                $grupo="SELECT nombreGrupo FROM grupo WHERE idMaestro = $maestroActual";
+                $query=mysqli_query($conexion, $grupo);
+                $nombreGrupo=$query_info["nombreGrupo"];
+
+                echo "<select class='grupo' name='grupo' id='grupo'>";
+
+                while($query_info=mysqli_fetch_assoc($query)){
+                    $nombreGrupo=$query_info["nombreGrupo"];
+                    echo "<option value='$nombreGrupo'>$nombreGrupo</option>";
+                }
+
+                echo "</select>"
+                
+
+            ?>
         </div>
     </div>
     <div class="footer-actividades">
         <button class="botones-footer" id="borrar-actividad">Borrar actividad</button>
         <button class="botones-footer" id ="publicar-actividad">PUBLICAR</button>
-        <button class="botones-footer" id="guardar-actividad">GUARDAR</button>
     </div>
+
 
         <a href="Actividades.php"><h3><-- Volver</h3></a>
 
