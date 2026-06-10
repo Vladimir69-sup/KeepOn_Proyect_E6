@@ -83,6 +83,7 @@ CREATE TABLE formulario
 	idFormulario INTEGER NOT NULL AUTO_INCREMENT,
 	idGrupo INTEGER,
 	FOREIGN KEY (idGrupo) REFERENCES grupo(idGrupo),
+	titulo TEXT NOT NULL,
 	descripcion TEXT NOT NULL,
 	PRIMARY KEY(idFormulario)
 );
@@ -190,10 +191,10 @@ CREATE TABLE respuestaProfesor
    PRIMARY KEY (idRespuestaProfesor)
 );
 
--- poblar tabla tipo pregunta 
-INSERT INTO formulario(descripcion)
+
+INSERT INTO formulario(titulo, descripcion)
 VALUES 
-    ("Cuestionario para obtener información del alumnado del estudio técnico en computación que permita desarrollar mejores modelos de enseñanza y aprendizaje adaptado");
+    ("Formulario sobre condiciones de estudio", "Cuestionario para obtener información del alumnado del estudio técnico en computación que permita desarrollar mejores modelos de enseñanza y aprendizaje adaptado");
 	
 INSERT INTO tipoPregunta(tipo)
 VALUES
