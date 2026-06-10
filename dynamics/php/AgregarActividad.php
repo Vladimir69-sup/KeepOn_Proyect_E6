@@ -8,11 +8,13 @@
 </head>
 <body>
     <h1>ACTIVIDAD</h1>
+    <form action="GuardarActividades.php" method="POST">
+
     <div class="informacion-actividad">
 
         <div class="lado-izquierdo">
             <label>Título:</label>
-            <input type="text" placeholder="Escribe el nombre de la actividad..." required>
+            <input type="text" name="titulo" placeholder="Escribe el nombre de la actividad..." required>
 
             <label>Descripción:</label>
             <textarea name="descripcion-actividad" id="descripcion-actividad" placeholder="Escribe una breve descripción de la actividad..." required ></textarea>
@@ -21,9 +23,9 @@
 
         <div class="lado-derecho">
             <label>Fecha Entrega:</label>
-            <input type="date">
+            <input name ="fecha_entrega" type="date">
             <label>Hora de Entrega:</label>
-            <input type="time">
+            <input name ="hora_entrega" type="time">
 
             <label for="modulo">Módulo:</label>
             <select class="modulo" name="modulo" id="modulo" required>
@@ -51,16 +53,14 @@
                 }
 
                 echo "</select>"
-                
-
             ?>
         </div>
     </div>
     <div class="footer-actividades">
         <button class="botones-footer" id="borrar-actividad">Borrar actividad</button>
-        <button class="botones-footer" id ="publicar-actividad">PUBLICAR</button>
+        <button class="botones-footer" value="Guardar Actividad" id ="publicar-actividad" type="submit">PUBLICAR</button>
     </div>
-
+    </form>
 
         <a href="Actividades.php"><h3><-- Volver</h3></a>
 
