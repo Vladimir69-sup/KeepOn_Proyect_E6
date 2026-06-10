@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keep-on</title>
-    <link rel= "stylesheet"href="./css/barra_lateral.css"> 
+    <link rel= "stylesheet"href="./css/vistaAlumnoMaestro.css"> 
     <link rel="icon" href="./img/COMPUTADORA.png" type="image/png">
     
 </head>
 <body>
+    
     <div id="barra_superior">
 
         <input type="checkbox" id="menu_lateral">
@@ -26,40 +27,30 @@
         <input id="buscador" type="text" placeholder="Busca algo aquí">
         <img id="user"src="./img/user.png">
 
-        <div id="barra_lateral">
-            <section id="primero"></section>
-            <section id="segundo"class="bloque_linea">
-                <a class="enlace"href="./actividades.html">
+       <article id="barra_lateral">
+            <section  id="primero_barra_lateral"></section>
+            <section id="segundo_barra_lateral"class="bloque_linea">
+                <a class="enlace"href="./actividadesMaestro.php">
                     <h3>ACTIVIDADES</h3>
                 </a>
-                <br><h4>&emsp;-Evaluadas</h4>
-                <h4>&emsp;-Por entregar</h4>
+                <br><h4>&emsp;-Estado global</h4> <!--si se pondra???-->
+                <h4>&emsp;-Estado por alumno</h4>
             </section>
             <section class="bloque_linea">
-                <a class="enlace"href="./formulario_evaluacion.html">
-                    <h3>FORMULARIO DE<br>EVALUACIÓN</h3>
-            </a>
-            </section>
-            <section class="bloque_linea">
-                <a class="enlace"href="./recursos_apoyo.html">
+                <a class="enlace"href="./recursosApoyo.php">
                     <h3>RECURSOS DE APOYO</h3>
                 </a>
             </section>
             <section class="bloque_linea">
-                <h3>CONTACTA A TU<br>PROFESOR</h3>
-            </section>
-            <section class="bloque_linea">
-                <a class="enlace"href="./proAnteriores.html">
-                    <h3>PROYECTOS ANTERIORES</h3>
+                <h3>LISTADO DE<br>ALUMNOS</h3>
+                <a class="enlace"href="./mensajesMaestro.php">
+                    <h4>&emsp;-Mensajes</h4>
                 </a>
             </section>
-        </div> 
-    </div>
+            
+        </article> 
 
+    </div>
+    
     
 </body> 
-
- 
-
-
-</html>

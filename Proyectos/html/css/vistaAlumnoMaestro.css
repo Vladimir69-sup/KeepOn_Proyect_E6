@@ -6,13 +6,14 @@
 
 #barra_superior 
 {
-    position: static;
+    position:static;
     background: rgb(33, 52, 126);
     margin: 0px;
     width: 100%;
     height: 100px;
     display: flex; 
     align-items: center; /*para acomodarlos en el centro verticalmente  */
+    
 }
 
 .logo 
@@ -59,15 +60,17 @@
     border-radius: 50%;
     margin-right: 10px;
 }
-#primero
+#primero_barra_lateral
 {
     width: 100%;
     border-bottom: 3px solid rgb(255, 255, 255); /*para delimitar el grosor*/
     margin-top: 20px;
 }
 
+
 .bloque_linea
 {
+
     width: 100%;
     border-bottom: 3px solid rgb(255, 255, 255); 
     padding: 10px;
@@ -88,7 +91,7 @@
 #barra_lateral  
 {
     display: none;
-    position: fixed;
+    position: absolute;
     top: 100px;
     width: 300px;
     height: 100%;
@@ -108,4 +111,12 @@
 }
 .enlace:hover
 {   color: rgb(182, 158, 38);}
+
+
+/*Recuadros que te direccionan a otras paginas(los BOTONES)*/
+h2
+{
+    color: white;
+    text-align: center;
+}
 
