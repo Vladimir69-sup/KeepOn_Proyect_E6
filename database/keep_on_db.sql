@@ -57,6 +57,8 @@ CREATE TABLE infoAdministrador
 CREATE TABLE actividad         
 (
     idActividad INTEGER NOT NULL AUTO_INCREMENT,
+    titulo VARCHAR(50) NOT NULL,
+    descripcion TEXT NOT NULL,
     hora VARCHAR(5) NOT NULL,
     fecha VARCHAR(8) NOT NULL,
     modulo INTEGER NOT NULL CHECK(modulo BETWEEN 1 AND 5)	,
