@@ -60,7 +60,7 @@ CREATE TABLE actividad
     titulo VARCHAR(50) NOT NULL,
     descripcion TEXT NOT NULL,
     hora VARCHAR(5) NOT NULL,
-    fecha VARCHAR(8) NOT NULL,
+    fecha VARCHAR(10) NOT NULL,
     modulo INTEGER NOT NULL CHECK(modulo BETWEEN 1 AND 5)	,
     idGrupo INTEGER NOT NULL,
     FOREIGN KEY(idGrupo) REFERENCES grupo(idGrupo),
@@ -154,7 +154,7 @@ CREATE TABLE asesoria
 (
     idAsesoria INTEGER NOT NULL AUTO_INCREMENT,
     hora VARCHAR(5) NOT NULL,
-    fecha VARCHAR(8) NOT NULL,
+    fecha VARCHAR(10) NOT NULL,
     tema VARCHAR(60) NOT NULL,
     idMaestro INTEGER NOT NULL,
     FOREIGN KEY(idMaestro) REFERENCES infoMaestro(idMaestro),
