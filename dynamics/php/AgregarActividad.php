@@ -15,7 +15,7 @@
             <input type="text" placeholder="Escribe el nombre de la actividad..." required>
 
             <label>Descripción:</label>
-            <textarea name="descripcion-actividad" id="descripcion-actividad" placeholder="Escribe una breve descripción de la actividad..." ></textarea>
+            <textarea name="descripcion-actividad" id="descripcion-actividad" placeholder="Escribe una breve descripción de la actividad..." required ></textarea>
             <div class="adjuntar-archivo">+ Adjuntar Archivo<input type="file" name="archivo-actividad" id="ipt-archivo-actividad" hidden></div>
         </div>
 
@@ -26,7 +26,7 @@
             <input type="time">
 
             <label for="modulo">Módulo:</label>
-            <select class="modulo" name="modulo" id="modulo">
+            <select class="modulo" name="modulo" id="modulo" required>
                 <option value="1">Modulo 1</option>
                 <option value="2">Modulo 2</option>
                 <option value="3">Modulo 3</option>
@@ -43,7 +43,7 @@
                 $query=mysqli_query($conexion, $grupo);
                 $nombreGrupo=$query_info["nombreGrupo"];
 
-                echo "<select class='grupo' name='grupo' id='grupo'>";
+                echo "<select class='grupo' name='grupo' id='grupo'required>";
 
                 while($query_info=mysqli_fetch_assoc($query)){
                     $nombreGrupo=$query_info["nombreGrupo"];
