@@ -4,7 +4,61 @@
     const PASSWORD = "";
     const DB = "keep_on_db";
 
-    $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);  
+    $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
+    
+    $guardadoForm = false;
+    //"lista" para que sepa que tipo de input debe ser dependiendo del idTipoPregunta de la base de datos 🍳
+    //La lista arriba para ya no repetirla cada vez 
+    $tipos = [
+        1 => 'radio',
+        2 => 'checkbox',
+        3 => 'textarea'
+    ];  
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id_formulario = $_GET['id_formulario'];
+        $idUsuario = 1; //este no existe es solo para probarlo pero aún no sé cómo está eso de los Usuarios
+        
+        //consultas para las respuestas de lo que se envió por post
+        $consultaPreguntas = "SELECT pregunta, idPregunta, idTipoPregunta FROM pregunta WHERE idFormulario=$id_formulario";
+        $preguntas = mysqli_query($conexion, $consultaPreguntas);
+        $totalPreguntas = mysqli_num_rows($preguntas); //mysqli_num_rows cuenta el total de preguntas (filas) que hay para poder recorrer esa cantidad en el for
+
+        //aquí se usa ciclo for similar que el de abajo, solo que este inserta ya las respuestas a la base de datos
+        for($num = 0; $num < $totalPreguntas; $num++){
+            $paqPreguntas = $preguntas->fetch_array();
+            $idPregunta = $paqPreguntas['idPregunta'];
+            $textTipoPregunta = $paqPreguntas['idTipoPregunta']; 
+            $tipoInput = $tipos[$textTipoPregunta]; 
+
+            $nombreInput = "respuesta_" . $idPregunta;
+
+            if (isset($_POST[$nombreInput])) {
+                if ($tipoInput == 'checkbox') {
+                    foreach ($_POST[$nombreInput] as $opcionSelec) {
+                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $opcionSelec)";
+                        mysqli_query($conexion, $sqlInsert);
+                    }
+                } 
+                else if ($tipoInput == 'textarea') {
+                    $valorRespuesta = $_POST[$nombreInput];
+                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES ('$valorRespuesta', $idUsuario, $idPregunta, NULL)";
+                    mysqli_query($conexion, $sqlInsert);
+                } 
+                else { 
+                    $valorRespuesta = $_POST[$nombreInput];
+                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $valorRespuesta)";
+                    mysqli_query($conexion, $sqlInsert);
+                }
+            }
+        }
+
+    //aquí yya se mara como enviado el formualrio
+    $estadoEnviado = "UPDATE formulario SET enviado = 1 WHERE idFormulario=$id_formulario";
+    mysqli_query($conexion, $estadoEnviado);
+    $guardadoForm = true;
+        
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,17 +72,13 @@
     <div class="contenedor-principal">
         <div class="contenido">
             <?php
-            $id_formulario = $_GET['id_formulario'];
-            //if consulta si se resolvió o no
+            /*
             $consultaEstado = "SELECT enviado FROM formulario WHERE idFormulario=$id_formulario";
             $resultadoEstado = mysqli_query($conexion, $consultaEstado);
             $paqEstado = $resultadoEstado->fetch_array();
-            $textEstado = $paqEstado['enviado'];
+            $textEstado = $paqEstado['enviado'];*/
 
-            if ($textEstado == true) {
-                echo "<p>Este formulario ya ha sido resuelto y enviado.</p>";
-            }
-            else if(!(isset($_GET['id_formulario']))){ //añadir si se cumple 
+            if(!(isset($_GET['id_formulario']))){ //añadir si se cumple 
                 echo "<h2> no se encontró nada</h2>";
             }
             else {
@@ -40,9 +90,19 @@
                 $textTitulo = $paqTit['titulo'];
             ?>
         <h1><?php echo $textTitulo;?></h1>
-<!--Se tiene que usar la tabla pregunta, formulario y tipoPregunta (se van a extraer las cosas de la tabla ya poblada) 🐳-->
-        <form action="VistaPerfilAlumno.php" name="keep_on_db" method="POST">
-            <input type="hidden" name="id_formulario" value="<?php echo $id_formulario; ?>">
+        <!--Se tiene que usar la tabla pregunta, formulario y tipoPregunta (se van a extraer las cosas de la tabla ya poblada) 🐳-->
+        <?php 
+            if ($guardadoForm) { 
+        ?>
+            <p>Formulario Resuelto</p>
+            <br>
+            <a href="VistaPerfilAlumno.php?">
+                <button type="button">Volver</button>
+            </a>
+        <?php   
+            }else{
+        ?>
+        <form action="" name="keep_on_db" method="POST">
             <?php 
                 $consultaDesc = "SELECT descripcion FROM formulario WHERE idFormulario=$id_formulario";
                 $texto = mysqli_query($conexion, $consultaDesc);
@@ -53,18 +113,7 @@
             <?php
                 $consultaPreguntas = "SELECT pregunta, idPregunta, idTipoPregunta FROM pregunta WHERE idFormulario=$id_formulario";
                 $preguntas = mysqli_query($conexion, $consultaPreguntas);
-    //HACER LA MISMA CONSULTA
-                //$consultaIipoPregunta = "SELECT idTipoPregunta FROM pregunta";
-                //$tipoPregunta = mysqli_query($conexion, $consultaIipoPregunta);
-                
                 $totalPreguntas = mysqli_num_rows($preguntas); //cuenta el total de preguntas que hay para poder recorrer esa cantidad en el for
-
-                //"lista" para que sepa que tipo de input debe ser dependiendo del idTipoPregunta de la base de datos 🍳
-                $tipos = [
-                    1 => 'radio',
-                    2 => 'checkbox',
-                    3 => 'textarea'
-                ];  
 
             //ciclo for para que recorra las preguntas y las despliegue con sus opciones de respuesta 🍂
                 for($num = 0; $num<$totalPreguntas; $num++){
@@ -118,10 +167,13 @@
                 <br><hr> 
                 <?php
                 }//Fin for
-            }
             ?>
             <button type="submit" name="enviar-form">Enviar</button>
         </form>
+        <?php 
+            }
+        }
+        ?>
         </div>
     </div>
 </body>

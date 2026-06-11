@@ -18,27 +18,12 @@
     const DB = "keep_on_db";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
-
-    //$id_formulario = $_GET['id_formulario']; 
-    $id_formulario = isset($_REQUEST['id_formulario']) ? $_REQUEST['id_formulario'] : 1;
-    //este es solo de prueba
-    $idUsuario = 1;
-
-    //Coonsulta el estado del formulario
-    $consultaEstado = "SELECT enviado FROM formulario WHERE idFormulario=$id_formulario";
+    
+    //Se consulta el estado del formulario
+    $consultaEstado = "SELECT enviado FROM formulario WHERE idFormulario = 1";
     $resultadoEstado = mysqli_query($conexion, $consultaEstado);
-    $paqEstado = $resultadoEstado->fetch_array();
-    $formResuelto = $paqEstado['enviado'];
-    //Consultas de nuevo
-    $consultaPreguntas = "SELECT pregunta, idPregunta, idTipoPregunta FROM pregunta WHERE idFormulario=$id_formulario";
-    $preguntas = mysqli_query($conexion, $consultaPreguntas);
-    $totalPreguntas = mysqli_num_rows($preguntas); //cuenta el total de preguntas que hay para poder recorrer esa cantidad en el for
-
-    $tipos = [
-        1 => 'radio',
-        2 => 'checkbox',
-        3 => 'textarea'
-    ]; 
+    $datosForm = $resultadoEstado->fetch_array();
+    $estadoEnviado = $datosForm['enviado'];
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +45,7 @@
                 <p>Grupo al que pertenece</p> 
             </div>
             
-            <form class="mostrar-abajo" action="" method="POST" enctype="multipart/form-data">
+            <form class="mostrar-abajo" method="POST" enctype="multipart/form-data">
                 <input type="file" name="foto-perfil-alumno" id="inpt-ftalumno" accept="image/png, image/jpeg" style="display: none;" required>
                 <label for="inpt-ftalumno" class="editar-perfil">Editar foto de Perfil</label>
                 <button type="submit" name="guardar-foto" class="guardar-foto"> Guardar</button>
@@ -71,59 +56,46 @@
             <div class="respuestas-form">
                 <h1>Condiciones de Estudio</h1>
                 <?php
-                if($formResuelto == true){
-                    for($num = 0; $num<$totalPreguntas; $num++){
-                    //
-                        $paqPreguntas = $preguntas->fetch_array();
-                        $textPreguntas = $paqPreguntas['pregunta'];
-                        $textTipoPregunta = $paqPreguntas['idTipoPregunta']; 
-                        $idPregunta = $paqPreguntas['idPregunta'];
-                        $tipoInput = $tipos[$textTipoPregunta];
+                    //si fue enviado se debe mostrar las respuestas y si no que lo diga
+                    if($estadoEnviado == 1){
+                        $idUsuario = 1; // idprueba
 
-                        $nombreInput = "respuesta_" . $idPregunta; //para saber el name="" de cada input
-                        //Si se acaba de enviar el formulario
-                        if(isset($POST['enviar-form'])){//el botón deñ otro formulario, es su name
-                            if(isset($_POST[$nombreInput])){
-                                if($tipoInput == 'checkbox'){
-                                    $seleccionesAlumno = "";
-                                    foreach($_POST[$nombreInput] as $opcionSelec){
-                                        $seleccionesAlumno = $seleccionesAlumno . $opcionSelec; //Se pone para que las guarde y no solamente deje la última
+                        $consultaPreguntas =  "SELECT idPregunta, pregunta, idTipoPregunta FROM pregunta WHERE idFormulario = 1";
+                        $resulPreguntas = mysqli_query($conexion, $consultaPreguntas);
+                        $totalPreguntas = mysqli_num_rows($resulPreguntas); //total de filas (preguntas)
 
-                                        $sqlInsert="INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $opcionSelec)";
-                                        mysqli_query($conexion, $sqlInsert);
-                                    }
-                                    $valorRespuesta = $seleccionesAlumno;
-                                } // if
-                                else{
-                                    $valorRespuesta = $_POST[$nombreInput];
-                                    if($tipoInput == 'textarea'){
-                                        // INSERT para textarea 
-                                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES ('$valorRespuesta', $idUsuario, $idPregunta, NULL)";
-                                    } else {
-                                        // INSERT para radio
-                                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuarioLogueado, $idPregunta, $valorRespuesta)";
-                                    }
-                                    mysqli_query($conexion, $sqlInsert);
-                                }//else
+                        for($cont = 0; $cont<$totalPreguntas; $cont++){
+                            $infoPreguntas = $resulPreguntas->fetch_array();
+                            $idPregunta = $infoPreguntas['idPregunta'];
+                            $textoPregunta = $infoPreguntas['pregunta'];
+                            $tipoPregunta = $infoPreguntas['idTipoPregunta'];
+
+                            echo "<p>" . $textoPregunta . "</p>"; //Imprime la pregunta
+
+                            $consultaResp = "SELECT textoRespuesta, idOpcionPregunta FROM respuestaUsuario WHERE idUsuario = $idUsuario AND idPregunta = $idPregunta";
+                            $respuestaAlumno = mysqli_query($conexion, $consultaResp);
+
+                            if($tipoPregunta == 3){ //si es textarea
+                                $resTextarea = $respuestaAlumno->fetch_array();
+                                echo "<p>". $resTextarea['textoRespuesta'] ."</p>";
                             }
-                            else{
-                                $consultaRes = "SELECT textoRespuesta, idOpcionPregunta FROM respuestaUsuario WHERE idPregunta = $idPregunta AND idUsuario = $idUsuario";
-                                //$valorRespuesta ="";
-                                $respues= mysqli_query($conexion, $consultaRes);
+                            else{ //si es radio o checkbox
+                                while ($dataOpcion = $respuestaAlumno->fetch_array()) {
+                                    $idOpcionElegida = $dataOpcion['idOpcionPregunta'];
+                                    //Se consultan las opciones en texto
+                                    $consultaTextoOpcion = "SELECT opcion FROM opcionPregunta WHERE idOpcionPregunta = $idOpcionElegida";
+                                    $resTextoOpcion = mysqli_query($conexion, $consultaTextoOpcion);
+                                    $opcionFinal = $resTextoOpcion->fetch_array();
+                                    
+                                    echo "<p> " . $opcionFinal['opcion'] . "</p>";
+                                }
                             }
-                        }else{
-                            //Solo se consulta de la base de datos
+                            echo "<hr>";
                         }
-                        echo "<p>$textPreguntas: $valorRespuesta</p>";
-                    }//for
-                if(isset($_POST['enviar-form'])){
-                        $updateEstado = "UPDATE formulario SET enviado = 1 WHERE idFormulario=$id_formulario";
-                        mysqli_query($conexion, $updateEstado);
                     }
-                }
-                else{
-                    echo "<p>El formulario no ha sido contestado<p>";
-                }
+                    else{
+                        echo "<p>El formulario aún no ha sido resuelto</p>";
+                    }
                 ?>
             </div>
             <div class="inferior-derecho">
