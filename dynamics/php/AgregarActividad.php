@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>ACTIVIDAD</h1>
-    <form action="GuardarActividades.php" method="POST">
+    <form action="AgregarActividad.php" method="POST">
 
     <div class="informacion-actividad">
 
@@ -58,12 +58,50 @@
     </div>
     <div class="footer-actividades">
         <button class="botones-footer" id="borrar-actividad">Borrar actividad</button>
-        <button class="botones-footer" value="Guardar Actividad" id ="publicar-actividad" type="submit">PUBLICAR</button>
+        <button class="botones-footer" value="Agregar Actividad" id ="publicar-actividad" type="submit">PUBLICAR</button>
     </div>
     </form>
 
         <a href="Actividades.php"><h3><-- Volver</h3></a>
 
+    <?php
+    include './validaciones.php';
+        if($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST["titulo"]) && isset($_POST["descripcion-actividad"]) && isset($_POST["hora_entrega"]) && isset($_POST["fecha_entrega"]) && isset($_POST["modulo"]) && isset($_POST["grupo"])){
+                echo "TEXTO";
+            $tituloLimpio=sanitizarEntrada(connect(), $_POST["titulo"]);
+            $descripcionLimpia=sanitizarEntrada(connect(), $_POST["descripcion-actividad"]);
+            $hora=$_POST["hora_entrega"];
+            $fecha=$_POST["fecha_entrega"];
+            $fechaLimpia=fechaLimpia($fecha);
+            $modulo=$_POST["modulo"];
+            $grupo=$_POST["grupo"];
+            
+            $consulta_idGrupo="SELECT idGrupo FROM grupo WHERE nombreGrupo='$grupo'";
+            $query=mysqli_query($conexion, $consulta_idGrupo);
+            $query_info=mysqli_fetch_assoc($query);
+            $idGrupo=$query_info["idGrupo"];
+
+            echo $fechaLimpia;
+            echo $hora;
+
+
+            $sql = "INSERT INTO actividad(titulo, descripcion, hora, fecha, modulo, idGrupo)
+                VALUES ('$tituloLimpio', '$descripcionLimpia', '$hora', '$fechaLimpia', $modulo, $idGrupo)";
+            $query = mysqli_query($conexion, $sql);
+            var_dump($query);
+
+            if($query){
+            $mensaje = "FUE UN EXITO";
+            $clase_mensaje = "mensaje-exito";
+            }
+            else{
+                $mensaje = "OCURRIO UN ERROR";
+                $clase_mensaje = "mensaje-error";
+            }
+        }
+        
     
+    
+    ?>
 </body>
 </html>
