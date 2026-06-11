@@ -82,7 +82,7 @@
 
                         $nombreInput = "respuesta_" . $idPregunta; //para saber el name="" de cada input
                         //Si se acaba de enviar el formulario
-                        if(isset($POST['enviar-form'])){//el botón del otro formulario, es su name
+                        if(isset($POST['enviar-form'])){//el botón deñ otro formulario, es su name
                             if(isset($_POST[$nombreInput])){
                                 if($tipoInput == 'checkbox'){
                                     $seleccionesAlumno = "";
@@ -98,7 +98,7 @@
                                     $valorRespuesta = $_POST[$nombreInput];
                                     if($tipoInput == 'textarea'){
                                         // INSERT para textarea 
-                                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES ('$valorRespuesta', $idUsuarioLogueado, $idPregunta, NULL)";
+                                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES ('$valorRespuesta', $idUsuario, $idPregunta, NULL)";
                                     } else {
                                         // INSERT para radio
                                         $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuarioLogueado, $idPregunta, $valorRespuesta)";
@@ -113,9 +113,7 @@
                             }
                         }else{
                             //Solo se consulta de la base de datos
-                            $consulta
                         }
-                        //Imprime pues todo pregunta y opciones
                         echo "<p>$textPreguntas: $valorRespuesta</p>";
                     }//for
                 if(isset($_POST['enviar-form'])){
