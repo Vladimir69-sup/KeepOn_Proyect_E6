@@ -39,7 +39,7 @@ CREATE TABLE infoAlumno
     numeroCuenta INTEGER NOT NULL,
     idGrupo INTEGER NOT NULL,
     idUsuario INT NOT NULL,
-    asistencia INT NOT NULL,
+    asistencia INT NOT NULL DEFAULT 0,
     FOREIGN KEY (idGrupo) REFERENCES grupo(idGrupo),
     FOREIGN KEY(idUsuario) REFERENCES infoGeneralUsuario(idUsuario),	
     PRIMARY KEY(idAlumno)
@@ -114,7 +114,7 @@ CREATE TABLE pregunta
 	pregunta TEXT NOT NULL,
 	idFormulario INTEGER NOT NULL,
     idTipoPregunta INTEGER NOT NULL,
-    puntaje_rendimiento INTEGER NOT NULL CHECK(calificacion BETWEEN 1 AND 5),
+    puntaje_rendimiento INTEGER NOT NULL CHECK(puntaje_rendimiento BETWEEN 1 AND 5),
 	FOREIGN KEY (idFormulario) REFERENCES formulario(idFormulario),
 	FOREIGN KEY(idTipoPregunta) REFERENCES tipoPregunta(idTipoPregunta),
 	PRIMARY KEY(idPregunta)
@@ -125,7 +125,7 @@ CREATE TABLE opcionPregunta
 	idOpcionPregunta INTEGER NOT NULL AUTO_INCREMENT,
 	opcion TEXT,
 	idPregunta INTEGER NOT NULL,
-    correcta entregado BOOL,
+    correcta BOOL,
 	FOREIGN KEY (idPregunta) REFERENCES pregunta(idPregunta),
 	PRIMARY KEY(idOpcionPregunta)
 );
@@ -138,7 +138,7 @@ CREATE TABLE respuestaUsuario
     idPregunta INTEGER NOT NULL,
     idOpcionPregunta INTEGER NOT NULL,
     calificacion_por_pregunta INTEGER NOT NULL,
-    puntaje_por_pregunta INTEGER NOT NULL CHECK(calificacion BETWEEN 0 AND 5),
+    puntaje_por_pregunta INTEGER NOT NULL CHECK(puntaje_por_pregunta BETWEEN 0 AND 5),
     FOREIGN KEY  (idUsuario) REFERENCES infoGeneralUsuario(idUsuario),
     FOREIGN KEY (idPregunta) REFERENCES pregunta(idPregunta),
     FOREIGN KEY  (idOpcionPregunta) REFERENCES opcionPregunta(idOpcionPregunta),
@@ -212,11 +212,53 @@ CREATE TABLE respuestaProfesor
 
 -- ==== POBLAMOS BASE DE DATOS === -- 
 
+-- == USUARIOS GENERALES     == --
+INSERT INTO infoGeneralUsuario (fechaNacimiento, correo, nombre, primerApellido, segundoApellido)
+VALUES
+    ("03/09/2009", "325302041@alumno.enp.unam.mx", "Karla Elizabeth", "Hernández", "Santiago"),
+    ("31/07/2008", "324002346@alumno.enp.unam.mx", "Ruben Isaac", "Peña", "González"),
+    ("18/11/2006", "luana.alvarez@ciencias.unam.mx", "Luana Sofia", "Alvarez", "Molina"),
+    ("04/06/2009", "123456789@alumno,enp.unam.mx", "Vladimir", "Ortiz", "Ochoa"),
+    ("22/08/2008", "987654321@alumno,enp.unam.mx", "Gabriela Abigail", "Escamilla", "Flores"),
+    ("15/12/2009", "246813579@alumno,enp.unam.mx", "Evelin Guadalupe", "Martínez", "Sevilla"),
+    ("20/08/2003", "luis.falcon@ingenieria.unam.mx", "Luis Adrian", "Gonzalez", "Falcon"),
+    ("19/03/1980", "AngelaVillanueva@unam.mx", "Angela Eugenia", "Villanueva", "Vilchis");
+
+INSERT INTO infoMaestro (numTrabajador, idUsuario)
+VALUES
+    ("322157000", 3),
+    ("012345678", 7);
+
+INSERT INTO grupo(nombreGrupo, idMaestro)
+VALUES
+    ("61B", 1),
+    ("61D", 2);
+
+INSERT INTO infoAlumno (numeroCuenta, idGrupo, idUsuario)
+VALUES
+    ("325302041", 1, 1),
+    ("324002346", 2, 2),
+    ("123456789", 1, 4),
+    ("987654321", 2, 5),
+    ("246813579", 1, 6);
+
+INSERT INTO infoAdministrador (numTrabajador, idUsuario) 
+VALUES
+    ("12398765", 8);
+
+INSERT INTO actividad (titulo, descripcion, hora, fecha, modulo, idGrupo) VALUES
+('Entrega de Proyecto Integrador', 'Subir el avance del proyecto en formato PDF con la estructura solicitada.', '23:59', '2026/06/15', 1, 1),
+('Examen Parcial 1', 'Evaluación teórica de los temas correspondientes a la primera unidad.', '08:00', '2026/06/18', 2, 1),
+('Foro de Discusión', 'Participar en el foro debatiendo sobre las arquitecturas de software limpias.', '14:30', '2026/06/20', 3, 1),
+('Práctica de Laboratorio 3', 'Desarrollo de la API REST utilizando el framework seleccionado en clase.', '10:00', '2026/06/16', 2, 2),
+('Exposición de Casos', 'Presentación en equipo sobre el análisis de requerimientos del cliente.', '11:30', '2026/06/19', 4, 2),
+('Cuestionario de Retroalimentación', 'Responder las preguntas sobre el desempeño y dudas del módulo actual.', '16:00', '2026/06/22', 5, 2);
+
 
 -- == FORMULARIO DE CONDICIONES DE ESTUDIO == --
-INSERT INTO formulario(titulo, descripcion)
+INSERT INTO formulario(titulo, descripcion, rendimiento_esperado)
 VALUES 
-    ("Formulario sobre condiciones de estudio", "Cuestionario para obtener información del alumnado del estudio técnico en computación que permita desarrollar mejores modelos de enseñanza y aprendizaje adaptado");
+    ("Formulario sobre condiciones de estudio", "Cuestionario para obtener información del alumnado del estudio técnico en computación que permita desarrollar mejores modelos de enseñanza y aprendizaje adaptado", 51);
 	
 INSERT INTO tipoPregunta(tipo)
 VALUES
@@ -224,34 +266,34 @@ VALUES
     ('checkbox'),
     ('textarea');
 
-INSERT INTO pregunta(pregunta,idFormulario,idTipoPregunta)
+INSERT INTO pregunta(pregunta,idFormulario,idTipoPregunta, puntaje_rendimiento)
 VALUES
-('1. ¿Cuántas horas estudias o haces tareas al día?',1,1),
-('2. ¿Dónde estudias la mayor parte del tiempo?',1,1),
-('3. ¿En qué horario te concentras mejor para estudiar?',1,1),
-('4. ¿Cómo estudias normalmente? (Marca las que apliquen)',1,2),
-('5. ¿Cuáles de las siguientes formas te ayuda más a aprender?',1,2),
-('6. ¿Con cuáles de los siguientes recursos cuentas para estudiar?',1,2),
-('7. Si tienes computadora, ¿es?',1,1),
-('8. ¿Qué recursos utilizas con mayor frecuencia para estudiar?',1,2),
-('9. ¿Te distraes con facilidad al estudiar?',1,1),
-('10. ¿Qué suele distraerte más?',1,2),
-('11. ¿Cómo consideras tu organización para entregar tareas?',1,1),
-('12. ¿Cuáles consideras que son tus principales fortalezas académicas? (Marca máximo 5)',1,2),
-('13. Menciona la habilidad académica en la que más destacas',1,3),
-('14. ¿Cuáles consideras que son tus principales dificultades?',1,2),
-('15. ¿Qué materias se te dificultan más?',1,2),
-('16. ¿Por qué se te dificultan esas materias?',1,2),
-('17. ¿Has tenido alguna de estas complicaciones académicas?',1,2),
-('18. ¿Por qué decidiste entrar al estudio técnico?',1,2),
-('19. ¿Qué es lo que más te motiva a continuar estudiando?',1,1),
-('20. ¿Qué situaciones podrían hacer que abandonaras el ETE?',1,2),
-('21. Actualmente, ¿has pensado en abandonar tus estudios?',1,1),
-('22. ¿Cuánto tiempo tardas en llegar a la escuela?',1,1),
-('23. ¿Cuál es tu principal medio de transporte?',1,1),
-('24. ¿Qué tipo de apoyo consideras que te ayudaría más a mejorar tu desempeño?',1,1),
+('1. ¿Cuántas horas estudias o haces tareas al día?',1,1, 1),
+('2. ¿Dónde estudias la mayor parte del tiempo?',1,1, 1),
+('3. ¿En qué horario te concentras mejor para estudiar?',1,1, 1),
+('4. ¿Cómo estudias normalmente? (Marca las que apliquen)',1,2, 1),
+('5. ¿Cuáles de las siguientes formas te ayuda más a aprender?',1,2, 1),
+('6. ¿Con cuáles de los siguientes recursos cuentas para estudiar?',1,2, 1),
+('7. Si tienes computadora, ¿es?',1,1, 3),
+('8. ¿Qué recursos utilizas con mayor frecuencia para estudiar?',1,2, 1),
+('9. ¿Te distraes con facilidad al estudiar?',1,1, 2),
+('10. ¿Qué suele distraerte más?',1,2,1),
+('11. ¿Cómo consideras tu organización para entregar tareas?',1,1, 3),
+('12. ¿Cuáles consideras que son tus principales fortalezas académicas? (Marca máximo 5)',1,2, 1),
+('13. Menciona la habilidad académica en la que más destacas',1,3, 1),
+('14. ¿Cuáles consideras que son tus principales dificultades?',1,2, 1),
+('15. ¿Qué materias se te dificultan más?',1,2, 1),
+('16. ¿Por qué se te dificultan esas materias?',1,2, 1),
+('17. ¿Has tenido alguna de estas complicaciones académicas?',1,2,3),
+('18. ¿Por qué decidiste entrar al estudio técnico?',1,2, 5),
+('19. ¿Qué es lo que más te motiva a continuar estudiando?',1,1, 5),
+('20. ¿Qué situaciones podrían hacer que abandonaras el ETE?',1,2, 5),
+('21. Actualmente, ¿has pensado en abandonar tus estudios?',1,1, 5),
+('22. ¿Cuánto tiempo tardas en llegar a la escuela?',1,1, 3),
+('23. ¿Cuál es tu principal medio de transporte?',1,1, 1),
+('24. ¿Qué tipo de apoyo consideras que te ayudaría más a mejorar tu desempeño?',1,1, 1),
 ('25. ¿Hay alguna situación personal o académica que consideres importante
- que tus profesores conozcan para apoyarte mejor?',1,3);
+ que tus profesores conozcan para apoyarte mejor?',1,3, 1);
 
 INSERT INTO opcionPregunta(opcion,idPregunta)
 VALUES 
