@@ -137,6 +137,7 @@ CREATE TABLE respuestaUsuario
     idUsuario INTEGER NOT NULL,
     idPregunta INTEGER NOT NULL,
     idOpcionPregunta INTEGER NOT NULL,
+    calificacion_por_pregunta INTEGER NOT NULL,
     puntaje_por_pregunta INTEGER NOT NULL CHECK(calificacion BETWEEN 0 AND 5),
     FOREIGN KEY  (idUsuario) REFERENCES infoGeneralUsuario(idUsuario),
     FOREIGN KEY (idPregunta) REFERENCES pregunta(idPregunta),
@@ -209,7 +210,10 @@ CREATE TABLE respuestaProfesor
    PRIMARY KEY (idRespuestaProfesor)
 );
 
+-- ==== POBLAMOS BASE DE DATOS === -- 
 
+
+-- == FORMULARIO DE CONDICIONES DE ESTUDIO == --
 INSERT INTO formulario(titulo, descripcion)
 VALUES 
     ("Formulario sobre condiciones de estudio", "Cuestionario para obtener información del alumnado del estudio técnico en computación que permita desarrollar mejores modelos de enseñanza y aprendizaje adaptado");
