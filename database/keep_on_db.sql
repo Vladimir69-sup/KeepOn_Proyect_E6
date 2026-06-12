@@ -38,11 +38,20 @@ CREATE TABLE infoAlumno
     idAlumno INTEGER NOT NULL AUTO_INCREMENT,
     numeroCuenta INTEGER NOT NULL,
     idGrupo INTEGER NOT NULL,
-    idUsuario INT NOT NULL,
-    asistencia INT NOT NULL DEFAULT 0,
+    idUsuario INTEGER NOT NULL,
     FOREIGN KEY (idGrupo) REFERENCES grupo(idGrupo),
     FOREIGN KEY(idUsuario) REFERENCES infoGeneralUsuario(idUsuario),	
     PRIMARY KEY(idAlumno)
+);
+
+CREATE TABLE asistencia(
+    idAsistencia INTEGER NOT NULL AUTO_INCREMENT,
+    idAlumno INTEGER NOT NULL,
+    fecha VARCHAR(10),
+    hora VARCHAR(5),
+    tiempo_estancia INTEGER NOT NULL,
+    PRIMARY KEY(idAsistencia),
+    FOREIGN KEY (idAlumno) REFERENCES infoAlumno(idAlumno)
 );
 
 CREATE TABLE infoAdministrador
@@ -75,7 +84,9 @@ CREATE TABLE actividadAlumno
 	entregado BOOL,
     calificacion INTEGER CHECK(calificacion BETWEEN 0 AND 10),
     idActividad INTEGER NOT NULL,
+    idAlumno INTEGER NOT NULL,
 	FOREIGN KEY(idActividad) REFERENCES actividad(idActividad),
+    FOREIGN KEY(idAlumno) REFERENCES infoAlumno(idAlumno),
 	PRIMARY KEY(idActividadAlumno)
 );	
 
@@ -94,10 +105,12 @@ CREATE TABLE formulario
 CREATE TABLE formularioAlumno(
     idFormularioAlumno INTEGER NOT NULL AUTO_INCREMENT,
     entregado BOOL,
-    calificacion INTEGER CHECK(calificacion BETWEEN 0 AND 10),
+    calificacion DECIMAL NULL,
     rendimiento_alumno INT NOT NULL,
     idFormulario INTEGER NOT NULL,
+    idAlumno INTEGER NOT NULL,
     FOREIGN KEY(idFormulario) REFERENCES formulario(idFormulario),
+    FOREIGN KEY(idAlumno) REFERENCES infoAlumno(idAlumno),
     PRIMARY KEY(idFormularioAlumno)
 );
 
@@ -114,7 +127,7 @@ CREATE TABLE pregunta
 	pregunta TEXT NOT NULL,
 	idFormulario INTEGER NOT NULL,
     idTipoPregunta INTEGER NOT NULL,
-    puntaje_rendimiento INTEGER NOT NULL CHECK(puntaje_rendimiento BETWEEN 1 AND 5),
+    puntaje_rendimiento INTEGER NOT NULL,
 	FOREIGN KEY (idFormulario) REFERENCES formulario(idFormulario),
 	FOREIGN KEY(idTipoPregunta) REFERENCES tipoPregunta(idTipoPregunta),
 	PRIMARY KEY(idPregunta)
@@ -136,9 +149,9 @@ CREATE TABLE respuestaUsuario
     textoRespuesta TEXT NOT NULL,
     idUsuario INTEGER NOT NULL,
     idPregunta INTEGER NOT NULL,
-    idOpcionPregunta INTEGER NOT NULL,
-    calificacion_por_pregunta INTEGER NOT NULL,
-    puntaje_por_pregunta INTEGER NOT NULL CHECK(puntaje_por_pregunta BETWEEN 0 AND 5),
+    idOpcionPregunta INTEGER NULL,
+    calificacion_por_pregunta DECIMAL NULL, 
+    puntaje_por_pregunta DECIMAL NOT NULL,
     FOREIGN KEY  (idUsuario) REFERENCES infoGeneralUsuario(idUsuario),
     FOREIGN KEY (idPregunta) REFERENCES pregunta(idPregunta),
     FOREIGN KEY  (idOpcionPregunta) REFERENCES opcionPregunta(idOpcionPregunta),
