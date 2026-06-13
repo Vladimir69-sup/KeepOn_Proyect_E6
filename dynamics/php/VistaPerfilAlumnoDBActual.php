@@ -15,15 +15,28 @@
     const DBHOST = "localhost";
     const DBUSER = "root";
     const PASSWORD = "";
-    const DB = "keep_on_db";
+    const DB = "keep_on_db_actualizada";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
+    $idUsuario = 1; // idprueba
+
+    //consulta alumno
+    $consultaAlumno = "SELECT idAlumno FROM infoAlumno WHERE idUsuario = $idUsuario";
+    $resultadoAlumno = mysqli_query($conexion, $consultaAlumno);
+    $datosAlumno = $resultadoAlumno->fetch_array();
+    $idAlumno = $datosAlumno['idAlumno'];
     
     //Se consulta el estado del formulario
-    $consultaEstado = "SELECT enviado FROM formulario WHERE idFormulario = 1";
+    $consultaEstado = "SELECT entregado FROM formularioalumno WHERE idFormulario = 1 AND idAlumno = $idAlumno";
     $resultadoEstado = mysqli_query($conexion, $consultaEstado);
-    $datosForm = $resultadoEstado->fetch_array();
-    $estadoEnviado = $datosForm['enviado'];
+
+    $formularioExiste = mysqli_num_rows($resultadoEstado);
+    if ($formularioExiste > 0) {
+        $datosForm = $resultadoEstado->fetch_array();
+        $estadoEnviado = $datosForm['entregado'];
+    } else {
+        $estadoEnviado = 0;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +71,7 @@
                 <?php
                     //si fue enviado se debe mostrar las respuestas y si no que lo diga
                     if($estadoEnviado == 1){
-                        $idUsuario = 1; // idprueba
+                        $idUsuario = 1; // idprueba    
 
                         $consultaPreguntas =  "SELECT idPregunta, pregunta, idTipoPregunta FROM pregunta WHERE idFormulario = 1";
                         $resulPreguntas = mysqli_query($conexion, $consultaPreguntas);
@@ -80,8 +93,8 @@
                                 echo "<p>". $resTextarea['textoRespuesta'] ."</p>";
                             }
                             else{ //si es radio o checkbox
-                                while ($dataOpcion = $respuestaAlumno->fetch_array()) {
-                                    $idOpcionElegida = $dataOpcion['idOpcionPregunta'];
+                                while ($datoOpcion = $respuestaAlumno->fetch_array()) {
+                                    $idOpcionElegida = $datoOpcion['idOpcionPregunta'];
                                     //Se consultan las opciones en texto
                                     $consultaTextoOpcion = "SELECT opcion FROM opcionPregunta WHERE idOpcionPregunta = $idOpcionElegida";
                                     $resTextoOpcion = mysqli_query($conexion, $consultaTextoOpcion);
@@ -99,7 +112,7 @@
                 ?>
             </div>
             <div class="inferior-derecho">
-                <a href="FormularioCondiciones.php?id_formulario=1"> <!--Modificar la url para que lleve en específico a esa, si no lo enviará a otra página-->
+                <a href="FormularioDBActual.php?id_formulario=1"> <!--Modificar la url para que lleve en específico a esa, si no lo enviará a otra página-->
                     <button id="formulario-condiciones">Formulario Condiciones de Estudio</button>
                 </a>
                 <p>Notas de tu profesor: </p>

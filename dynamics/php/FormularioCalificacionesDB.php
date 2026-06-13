@@ -1,8 +1,10 @@
 <?php
+    //FORMULARIO PARA PODER VOLVER A ENTREGAR MÚLTIPLES VECES
+
     const DBHOST = "localhost";
     const DBUSER = "root";
     const PASSWORD = "";
-    const DB = "keep_on_db";
+    const DB = "keep_on_db_actualizada";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
     
@@ -18,7 +20,40 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_formulario = $_GET['id_formulario'];
         $idUsuario = 1; //este no existe es solo para probarlo pero aún no sé cómo está eso de los Usuarios
-        
+
+        //Consulta del idAlumno 
+        $consultaAlumno = "SELECT idAlumno FROM infoAlumno WHERE idUsuario =  $idUsuario";
+        $resultadoAlumno = mysqli_query($conexion, $consultaAlumno);
+        $datosAlumno = $resultadoAlumno->fetch_array();
+        $idAlumno = $datosAlumno['idAlumno'];
+
+        //Consulta de si está entregado o no 
+        $consultaEstado = "SELECT idFormularioAlumno, entregado FROM formularioAlumno WHERE idFormulario = $id_formulario AND idAlumno = $idAlumno";
+
+        $resultadoEstado = mysqli_query($conexion, $consultaEstado);
+        //$datosForm = $resultadoEstado->fetch_array();
+        //$estadoEnviado = $datosForm['entregado'];
+
+        $formularioExiste = mysqli_num_rows($resultadoEstado);
+        //Si el alumno tiene existente el formulario
+        if($formularioExiste > 0){
+            $datosForm = $resultadoEstado->fetch_array();
+            $idFormularioAlumno = $datosForm['idFormularioAlumno'];
+            $estadoEnviado = $datosForm['entregado'];
+        }
+        else{
+            $sqlInsertProgreso = "INSERT INTO formularioAlumno (entregado, calificacion, rendimiento_alumno, idFormulario, idAlumno) VALUES (0, 0, 0, $id_formulario, $idAlumno)";
+            mysqli_query($conexion, $sqlInsertProgreso);
+            $idFormularioAlumno = mysqli_insert_id($conexion);
+            $estadoEnviado = 0;
+        }
+
+        //Si ya se envió antes de enviar los datos nueuvos del formulario se borran, así no aparece repetido en la base de datos y ya no se imprimen todas las respuestas guardadas
+        if($estadoEnviado == 1){
+            $sqlBorrar = "DELETE FROM respuestaUsuario WHERE idUsuario = $idUsuario AND idPregunta IN (SELECT idPregunta FROM pregunta WHERE idFormulario = $id_formulario)";
+            mysqli_query($conexion, $sqlBorrar);
+        }
+
         //consultas para las respuestas de lo que se envió por post
         $consultaPreguntas = "SELECT pregunta, idPregunta, idTipoPregunta FROM pregunta WHERE idFormulario=$id_formulario";
         $preguntas = mysqli_query($conexion, $consultaPreguntas);
@@ -34,27 +69,32 @@
             $nombreInput = "respuesta_" . $idPregunta;
 
             if (isset($_POST[$nombreInput])) {
+
                 if ($tipoInput == 'checkbox') {
                     foreach ($_POST[$nombreInput] as $opcionSelec) {
-                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $opcionSelec)";
+                        //$sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $opcionSelec)";
+                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $opcionSelec, 0, 0)";
                         mysqli_query($conexion, $sqlInsert);
                     }
                 } 
                 else if ($tipoInput == 'textarea') {
                     $valorRespuesta = $_POST[$nombreInput];
-                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES ('$valorRespuesta', $idUsuario, $idPregunta, NULL)";
+                    //$sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES ('$valorRespuesta', $idUsuario, $idPregunta, NULL)";
+                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('$valorRespuesta', $idUsuario, $idPregunta, NULL, 0, 0)";
                     mysqli_query($conexion, $sqlInsert);
                 } 
                 else { 
                     $valorRespuesta = $_POST[$nombreInput];
-                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $valorRespuesta)";
+                    //$sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $valorRespuesta)";
+                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $valorRespuesta, 0, 0)";
                     mysqli_query($conexion, $sqlInsert);
                 }
             }
         }
 
     //aquí yya se mara como enviado el formualrio
-    $estadoEnviado = "UPDATE formulario SET enviado = 1 WHERE idFormulario=$id_formulario";
+    //$estadoEnviado = "UPDATE formularioAlumno SET entregado = 1 WHERE idFormularioAlumno=$id_formulario";
+    $estadoEnviado = "UPDATE formularioAlumno SET entregado = 1, rendimiento_alumno = 0 WHERE idFormularioAlumno = $idFormularioAlumno";
     mysqli_query($conexion, $estadoEnviado);
     $guardadoForm = true;
         
@@ -96,7 +136,7 @@
         ?>
             <p>Formulario Resuelto</p>
             <br>
-            <a href="VistaPerfilAlumno.php?">
+            <a href="VistaFormularioCalificaciones.php?">
                 <button type="button">Volver</button>
             </a>
         <?php   
