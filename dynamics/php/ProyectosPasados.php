@@ -17,7 +17,7 @@
             <p id="tit">¡Que onda coyolover!</p>
             <p id="text">Estas pensando en darte de baja de la ete?, si es asi detente un momento,
             aun te falta mas por conocer, no desesperes coyotito pronto haras cosas increibles 
-            como las de nuestros compañeros de generaciones anteriores, como puedesver a continuacion,
+            como las de nuestros compañeros de generaciones anteriores, como puedes ver a continuacion,
             juegos que te volaran la mente y codigos que te haran soñar con c++. 
             Recuerda que eres increible, puedes lograr lo que quieras, no dejes esta experiencia a medias 
             y nunca olvides que si puedes imaginarlo puede programarlo.</p> 

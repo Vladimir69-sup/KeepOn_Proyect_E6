@@ -11,23 +11,24 @@
 }
 h1
 {
-    margin-top: 60px;
-    font-size: 130px;
+    margin-top: 20px;
+    font-size: 85px;
     text-align: center;
     margin-bottom: 90px;
 }
 img
 {
-    margin-left: 150px;
-    width: 290px;
+    margin-left: 100px;
+    margin-top: 15px;
+    width: 210px;
 }
 .cont
 {
     display: flex;        
-    align-items: center;  
+    align-items: flex-start;  
     justify-content: flex-start;
     gap: 50px;             
-    margin-top: 50px;
+    margin-top: -60px;
     flex-wrap: wrap;
 }
 .rectangulo
@@ -37,8 +38,8 @@ img
     border-radius: 20px;
     background-color: rgb(174,197,255);
     padding: 20px;
-    max-width: 1200px;
-    min-height: 300px;
+    max-width: 770px;
+    min-height: 200px;
     margin: 0;
     width: 100%;
 }
@@ -78,13 +79,14 @@ img
 }
 #tit
 {
-    font-size: 40px;
+    font-size: 30px;
     text-align: center;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 #text 
 {
-    font-size: 35px;
+    font-size: 20px;
 }
 #tit1
 {
