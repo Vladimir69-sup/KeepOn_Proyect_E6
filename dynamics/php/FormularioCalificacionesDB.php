@@ -4,7 +4,7 @@
     const DBHOST = "localhost";
     const DBUSER = "root";
     const PASSWORD = "";
-    const DB = "keep_on_db_actualizada";
+    const DB = "keep_on_db";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
     
@@ -55,15 +55,17 @@
         }
 
         //consultas para las respuestas de lo que se envió por post
-        $consultaPreguntas = "SELECT pregunta, idPregunta, idTipoPregunta FROM pregunta WHERE idFormulario=$id_formulario";
+        $consultaPreguntas = "SELECT pregunta, idPregunta, idTipoPregunta, puntaje_rendimiento FROM pregunta WHERE idFormulario=$id_formulario";
         $preguntas = mysqli_query($conexion, $consultaPreguntas);
         $totalPreguntas = mysqli_num_rows($preguntas); //mysqli_num_rows cuenta el total de preguntas (filas) que hay para poder recorrer esa cantidad en el for
+        $rendimientoTotal = 0.0;
 
         //aquí se usa ciclo for similar que el de abajo, solo que este inserta ya las respuestas a la base de datos
         for($num = 0; $num < $totalPreguntas; $num++){
             $paqPreguntas = $preguntas->fetch_array();
             $idPregunta = $paqPreguntas['idPregunta'];
             $textTipoPregunta = $paqPreguntas['idTipoPregunta']; 
+            $puntaje_rendimiento = $paqPreguntas['puntaje_rendimiento'];
             $tipoInput = $tipos[$textTipoPregunta]; 
 
             $nombreInput = "respuesta_" . $idPregunta;
@@ -71,9 +73,37 @@
             if (isset($_POST[$nombreInput])) {
 
                 if ($tipoInput == 'checkbox') {
+                    $correctasFijas = "SELECT correcta FROM opcionPregunta WHERE idPregunta = $idPregunta";
+                    $resCorrectasFijas = mysqli_query($conexion, $correctasFijas);
+                    $correctasTotales = 0;
+                    $aciertos = 0;
+
+                    while($opcion = $resCorrectasFijas->fetch_array()){
+                        if($opcion['correcta'] == 1){
+                            $correctasTotales++;
+                        }
+                    }
+
                     foreach ($_POST[$nombreInput] as $opcionSelec) {
-                        //$sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $opcionSelec)";
-                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $opcionSelec, 0, 0)";
+                        $consultaCorrecta = "SELECT correcta FROM opcionPregunta WHERE idOpcionPregunta = $opcionSelec";
+                        $esCorrecta = mysqli_query($conexion, $consultaCorrecta);
+                        $datosOpcion = $esCorrecta->fetch_array();
+                        $respuesta = $datosOpcion['correcta'];
+
+                        if($respuesta == 1){
+                            $aciertos++;
+                        }
+                    }
+                    $puntajeFinal = ($aciertos / $correctasTotales) * $puntaje_rendimiento;
+                    $rendimientoTotal += $puntajeFinal;
+                    
+                    foreach($_POST[$nombreInput] as $opcionSelec){
+                        $consultaCorrecta = "SELECT correcta FROM opcionPregunta WHERE idOpcionPregunta = $opcionSelec";
+                        $esCorrecta = mysqli_query($conexion, $consultaCorrecta);
+                        $datosOpcion = $esCorrecta->fetch_array();
+                        $respuesta = $datosOpcion['correcta'];
+
+                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $opcionSelec, $respuesta, $puntajeFinal)";
                         mysqli_query($conexion, $sqlInsert);
                     }
                 } 
@@ -86,7 +116,16 @@
                 else { 
                     $valorRespuesta = $_POST[$nombreInput];
                     //$sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta) VALUES (NULL, $idUsuario, $idPregunta, $valorRespuesta)";
-                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $valorRespuesta, 0, 0)";
+                    $consultaCorrecta = "SELECT correcta FROM opcionPregunta WHERE idOpcionPregunta = $valorRespuesta";
+                    $esCorrecta = mysqli_query($conexion, $consultaCorrecta);
+                    $datosOpcion = $esCorrecta->fetch_array();
+                    $calificacion_por_pregunta = $datosOpcion['correcta'];
+
+                    //Cálculo
+                    $puntaje_por_pregunta = $calificacion_por_pregunta * $puntaje_rendimiento;
+                    $rendimientoTotal += $puntaje_por_pregunta;
+                    
+                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $valorRespuesta, $calificacion_por_pregunta, $puntaje_por_pregunta)";
                     mysqli_query($conexion, $sqlInsert);
                 }
             }
@@ -94,9 +133,9 @@
 
     //aquí yya se mara como enviado el formualrio
     //$estadoEnviado = "UPDATE formularioAlumno SET entregado = 1 WHERE idFormularioAlumno=$id_formulario";
-    $estadoEnviado = "UPDATE formularioAlumno SET entregado = 1, rendimiento_alumno = 0 WHERE idFormularioAlumno = $idFormularioAlumno";
-    mysqli_query($conexion, $estadoEnviado);
-    $guardadoForm = true;
+        $estadoEnviado = "UPDATE formularioAlumno SET entregado = 1, rendimiento_alumno = $rendimientoTotal, calificacion = $rendimientoTotal WHERE idFormularioAlumno = $idFormularioAlumno";
+        mysqli_query($conexion, $estadoEnviado);
+        $guardadoForm = true;
         
     }
 ?>

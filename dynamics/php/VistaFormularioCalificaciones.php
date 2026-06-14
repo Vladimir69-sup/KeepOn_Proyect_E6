@@ -4,7 +4,7 @@
     const DBHOST = "localhost";
     const DBUSER = "root";
     const PASSWORD = "";
-    const DB = "keep_on_db_actualizada";
+    const DB = "keep_on_db";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
     $idUsuario = 1; // idprueba
@@ -46,7 +46,7 @@
                     if($estadoEnviado == 1){
                         $idUsuario = 1; // idprueba    
 
-                        $consultaPreguntas =  "SELECT idPregunta, pregunta, idTipoPregunta FROM pregunta WHERE idFormulario = 1";
+                        $consultaPreguntas =  "SELECT idPregunta, pregunta, idTipoPregunta, puntaje_rendimiento FROM pregunta WHERE idFormulario = 1";
                         $resulPreguntas = mysqli_query($conexion, $consultaPreguntas);
                         $totalPreguntas = mysqli_num_rows($resulPreguntas); //total de filas (preguntas)
 
@@ -55,19 +55,37 @@
                             $idPregunta = $infoPreguntas['idPregunta'];
                             $textoPregunta = $infoPreguntas['pregunta'];
                             $tipoPregunta = $infoPreguntas['idTipoPregunta'];
+                            $puntosTotales = $infoPreguntas['puntaje_rendimiento'];
 
                             echo "<p>" . $textoPregunta . "</p>"; //Imprime la pregunta
 
-                            $consultaResp = "SELECT textoRespuesta, idOpcionPregunta FROM respuestaUsuario WHERE idUsuario = $idUsuario AND idPregunta = $idPregunta";
+                            $consultaResp = "SELECT textoRespuesta, idOpcionPregunta, puntaje_por_pregunta FROM respuestaUsuario WHERE idUsuario = $idUsuario AND idPregunta = $idPregunta";
                             $respuestaAlumno = mysqli_query($conexion, $consultaResp);
 
                             if($tipoPregunta == 3){ //si es textarea
                                 $resTextarea = $respuestaAlumno->fetch_array();
                                 echo "<p>". $resTextarea['textoRespuesta'] ."</p>";
                             }
-                            else{ //si es radio o checkbox
+                            else if ($tipoPregunta == 1){ //si es radio 
                                 while ($datoOpcion = $respuestaAlumno->fetch_array()) {
                                     $idOpcionElegida = $datoOpcion['idOpcionPregunta'];
+                                    $puntos = $datoOpcion['puntaje_por_pregunta'];
+                                    
+                                    //Se consultan las opciones en texto
+                                    $consultaTextoOpcion = "SELECT opcion FROM opcionPregunta WHERE idOpcionPregunta = $idOpcionElegida";
+                                    $resTextoOpcion = mysqli_query($conexion, $consultaTextoOpcion);
+                                    $opcionFinal = $resTextoOpcion->fetch_array();
+
+                                    echo "<p>" . $opcionFinal['opcion'] . "</p>";
+                                    echo "<p>" . $puntos . " de " . $puntosTotales . "pts.</p>";
+                                }
+                            }
+                            else{ //checkbox
+                                $puntosObt  = 0;
+
+                                while ($datoOpcion = $respuestaAlumno->fetch_array()) {
+                                    $idOpcionElegida = $datoOpcion['idOpcionPregunta'];
+                                    $puntosObt = $datoOpcion['puntaje_por_pregunta'];
                                     //Se consultan las opciones en texto
                                     $consultaTextoOpcion = "SELECT opcion FROM opcionPregunta WHERE idOpcionPregunta = $idOpcionElegida";
                                     $resTextoOpcion = mysqli_query($conexion, $consultaTextoOpcion);
@@ -75,6 +93,7 @@
                                     
                                     echo "<p> " . $opcionFinal['opcion'] . "</p>";
                                 }
+                                echo "<p>" . sprintf('%0.2f', $puntosObt)  . " de " . $puntosTotales . "pts.</p>";
                             }
                             echo "<hr>";
                         }
