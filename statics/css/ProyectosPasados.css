@@ -45,18 +45,19 @@ img
 }
 .juegos
 {
-    margin-top: 100px;
-    gap: 280px;
+    margin-top: 80px;
+    gap: 100px;
     justify-content: center;
-    display: flex; 
+    display: flex;
+    flex-wrap: wrap;
 }
 .juego1
 {
     border-radius: 20px;
     background-color: rgb(204,204,255);
     padding: 20px;
-    max-width: 300px;
-    min-height: 400px;
+    max-width: 250px;
+    height: 350px;
     width: 100%;
 }
 .juego2
@@ -64,8 +65,8 @@ img
     border-radius: 20px;
     background-color: rgb(204,204,255);
     padding: 20px;
-    max-width: 300px;
-    min-height: 400px;
+    max-width: 250px;
+    height: 350px;
     width: 100%;
 }
 .juego3
@@ -73,8 +74,26 @@ img
     border-radius: 20px;
     background-color: rgb(204,204,255);
     padding: 20px;
-    max-width: 300px;
-    min-height: 400px;
+    max-width: 250px;
+    height: 350px;
+    width: 100%;
+}
+.juego4
+{
+    border-radius: 20px;
+    background-color: rgb(204,204,255);
+    padding: 20px;
+    max-width: 250px;
+    height: 350px;
+    width: 100%;
+}
+.juego5
+{
+    border-radius: 20px;
+    background-color: rgb(204,204,255);
+    padding: 20px;
+    max-width: 250px;
+    height: 350px;
     width: 100%;
 }
 #tit
@@ -90,20 +109,23 @@ img
 }
 #tit1
 {
+    margin-top: 12px;
     text-align: center;
-    font-size: 40px;
+    font-size: 35px;
     color: white;
 
 }
 #tit2
 {
+    margin-top: 12px;
     text-align: center;
-    font-size: 40px;
+    font-size: 35px;
     color: white;
 }
 #tit3
 {
+    margin-top: 12px;
     text-align: center;
-    font-size: 40px;
+    font-size: 35px;
     color: white;
 }

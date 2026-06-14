@@ -33,6 +33,12 @@
         <div class="juego3">
             <p id="tit3">Bancarrota</p>
         </div>
+        <div class="juego4">
+            <p id="tit3">Coyotron</p>
+        </div>
+        <div class="juego5">
+            <p id="tit3">Bebes en peligro</p>
+        </div>
     </div>
 </body>
 </html>
