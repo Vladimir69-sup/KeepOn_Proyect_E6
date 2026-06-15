@@ -15,7 +15,7 @@
     const DBHOST = "localhost";
     const DBUSER = "root";
     const PASSWORD = "";
-    const DB = "keep_on_db_actualizada";
+    const DB = "keep_on_db";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
     $idUsuario = 1; // idprueba
