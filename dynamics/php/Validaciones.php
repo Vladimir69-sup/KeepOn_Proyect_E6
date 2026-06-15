@@ -93,7 +93,10 @@ function validarPassword($passLogin){
     
 }
 
+function fechaLimpia($fecha){
+    strtotime($fecha);
+    $fechaLimpia = date('d-m-Y', strtotime($fecha));
+    return $fechaLimpia;
+}
+
 ?>
-
-
-    

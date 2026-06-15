@@ -159,7 +159,6 @@ CREATE TABLE respuestaUsuario
 );
 
 
-
 --AYUDAS EXTRAS 
 CREATE TABLE comentario 
 (
