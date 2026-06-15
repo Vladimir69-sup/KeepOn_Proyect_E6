@@ -1,0 +1,41 @@
+*{
+    background-image: url('../media/img/galax.jpeg'); 
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    background-size: 1300px auto; 
+    background-attachment: fixed; 
+    min-height: 100vh; 
+    margin: 0px; 
+}
+h1
+{
+    margin-top: 40px;
+    text-align: center;
+    font-size: 80px;
+    color: white;
+}
+h2
+{  
+    margin-top: -450px;
+    text-align: center;
+    font-size: 40px;
+    color: white;
+}
+img
+{
+    display: block;
+    margin-left: 250px;
+    margin-top: -550px;
+    width: 800px;
+}
+.text 
+{
+    color: white;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.desc
+{
+    padding-left: 70px;
+    padding-right: 70px;
+}
