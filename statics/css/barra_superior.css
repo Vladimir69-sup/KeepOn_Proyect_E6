@@ -9,9 +9,10 @@
     background: rgb(33, 52, 126);
     margin: 0px;
     width: 100%;
-    height: 10vw;
+    height: 100px;
     display: flex; 
     align-items: center; /*para acomodarlos en el centro verticalmente  */
+    justify-content: center;
 }
 .logo 
 {
@@ -20,7 +21,14 @@
     height: 60px;
     margin: 10px;
 }
-
+#menu 
+{
+    position: static;
+    width: auto;
+    height: 40px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
 #buscador
 {
     flex-grow: 1; /*estira/encoje ocupando el espacio disponible restante, respetando a los static */
