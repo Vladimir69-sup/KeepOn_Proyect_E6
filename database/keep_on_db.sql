@@ -39,6 +39,7 @@ CREATE TABLE infoAlumno
     numeroCuenta INTEGER NOT NULL,
     idGrupo INTEGER NOT NULL,
     idUsuario INTEGER NOT NULL,
+    asistencia INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (idGrupo) REFERENCES grupo(idGrupo),
     FOREIGN KEY(idUsuario) REFERENCES infoGeneralUsuario(idUsuario),	
     PRIMARY KEY(idAlumno)
