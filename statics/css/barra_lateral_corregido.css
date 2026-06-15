@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#barra_superior 
+{
+    position:static;
+    background: rgb(33, 52, 126);
+    margin: 0px;
+    width: 100%;
+    height: 100px;
+    display: flex; 
+    align-items: center; /*para acomodarlos en el centro verticalmente  */
+    
+}
+
+.logo 
+{
+    position: static;
+    width: auto;
+    height: 60px;
+    margin: 10px;
+}
+
+#menu_imagen
+{
+    position: static;
+    width: auto;
+    height: 40px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#buscador
+{
+    flex-grow: 1; /*estira/encoje ocupando el espacio disponible restante, respetando a los static */
+    margin-right: 20px; 
+    border-radius: 5px;
+    font-size: 15px;
+    background: rgb(151,152,156);
+    height: 30px;
+    border: 0px; 
+    padding: 10px;/*DENTRO del imput para que las letras no esten pegadas a la orilla */
+}
+
+#lupa 
+{
+    position: static; 
+    width: auto;
+    height: 30px;
+    border-radius: 5px;
+}
+
+#user 
+{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+#primero_barra_lateral
+{
+    width: 100%;
+    border-bottom: 3px solid rgb(255, 255, 255); /*para delimitar el grosor*/
+    margin-top: 20px;
+}
+
+
+.bloque_linea
+{
+
+    width: 100%;
+    border-bottom: 3px solid rgb(255, 255, 255); 
+    padding: 10px;
+    color:white;
+    
+}
+
+#barra_lateral,h4
+{
+  font-family: 'Arial', serif;
+}
+
+/* PARA MOSTRAR Y OCULTAR LA BARRA LATERAL */
+#menu_lateral
+{
+    display:none;
+}
+#barra_lateral  
+{
+    display: none;
+    position: absolute;
+    top: 100px;
+    width: 300px;
+    height: 100%;
+    background-color: rgb(33, 67, 134);
+}
+
+#menu_lateral:checked ~ #barra_lateral
+{
+    display: block;
+   left:0;
+}
+
+.enlace
+{
+    color: white; 
+    cursor: pointer;
+}
+.enlace:hover
+{   color: rgb(182, 158, 38);}
+
+
+/*Recuadros que te direccionan a otras paginas(los BOTONES)*/
+h2
+{
+    color: white;
+    text-align: center;
+}
+
