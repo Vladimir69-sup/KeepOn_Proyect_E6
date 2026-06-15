@@ -40,9 +40,9 @@
             <button class="botones">Mas Informacion</button>
         </div>
         <div class="juego3">
-            <p id="tit3">Bancarrota</p>
+            <p id="tit3">Juan Garnachas</p>
             <img src="../../../img/bancarrota1.png" class="imagenes">
-            <p class="desc">Eres dueño de un negocio y tienes que crear distintos alimentos
+            <p class="desc">Eres dueño de un negocio y tienes que triunfar en las garnachas
                 ¿Lograras pasar cada nivel sin caer en banca rota?
             </p>
             <button class="botones">Mas Informacion</button>
