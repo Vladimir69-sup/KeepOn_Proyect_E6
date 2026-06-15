@@ -103,7 +103,7 @@
                         $datosOpcion = $esCorrecta->fetch_array();
                         $respuesta = $datosOpcion['correcta'];
 
-                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $opcionSelec, $respuesta, $puntajeFinal)";
+                        $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $opcionSelec, $puntajeFinal, $puntajeFinal)";
                         mysqli_query($conexion, $sqlInsert);
                     }
                 } 
@@ -125,15 +125,28 @@
                     $puntaje_por_pregunta = $calificacion_por_pregunta * $puntaje_rendimiento;
                     $rendimientoTotal += $puntaje_por_pregunta;
                     
-                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $valorRespuesta, $calificacion_por_pregunta, $puntaje_por_pregunta)";
+                    $sqlInsert = "INSERT INTO respuestaUsuario (textoRespuesta, idUsuario, idPregunta, idOpcionPregunta, calificacion_por_pregunta, puntaje_por_pregunta) VALUES ('', $idUsuario, $idPregunta, $valorRespuesta, $puntaje_por_pregunta, $puntaje_por_pregunta)";
                     mysqli_query($conexion, $sqlInsert);
                 }
             }
         }
+        //CALIFICACIONES
+        //para los puntos totales:
+        $sqlPreguntasForm = "SELECT puntaje_rendimiento FROM pregunta WHERE idFormulario = $id_formulario";
+        $resPreguntas = mysqli_query($conexion, $sqlPreguntasForm);
+        $totalPreguntasPuntos = mysqli_num_rows($resPreguntas);
+        $puntosTotales = 0;
 
-    //aquí yya se mara como enviado el formualrio
-    //$estadoEnviado = "UPDATE formularioAlumno SET entregado = 1 WHERE idFormularioAlumno=$id_formulario";
-        $estadoEnviado = "UPDATE formularioAlumno SET entregado = 1, rendimiento_alumno = $rendimientoTotal, calificacion = $rendimientoTotal WHERE idFormularioAlumno = $idFormularioAlumno";
+        for($contPuntosTotales = 0; $contPuntosTotales < $totalPreguntasPuntos; $contPuntosTotales++ ){
+            $filaPreg = $resPreguntas->fetch_array();
+            $puntosTotales += $filaPreg['puntaje_rendimiento'];
+        }
+
+        $sumPuntajeAlum = $rendimientoTotal;
+        $calificacionForm = ($sumPuntajeAlum / $puntosTotales) * 10;
+
+        //Estado enviado 
+        $estadoEnviado = "UPDATE formularioAlumno SET entregado = 1, rendimiento_alumno = $sumPuntajeAlum, calificacion = $calificacionForm WHERE idFormularioAlumno = $idFormularioAlumno";
         mysqli_query($conexion, $estadoEnviado);
         $guardadoForm = true;
         
