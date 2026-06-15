@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device_width, initial_scaled=1.0">
+    <meta name="author" content="Evelin Guadalupe Martinez Sevilla">
+    <meta name="description" content="Pagina de inicio">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./statics/css/barra_superior.css">
+    <link rel="icon" href="./statics/media/img/COMPUTADORA.png" type="image/png">
+    <title>Home</title>
+    </head>
+<body>
+    <!--Seccion de barra superior-->
+    <div id="barra_superior">
+        <img class="logo"id="unam"alt ="logo"src="./statics/media/img/logo_unam.svg">   
+        <img class="logo"id="enp"alt ="logo"src="./statics/media/img/logo_enp.svg">           
+        <img class="logo"id="etes"alt ="logo"src="./statics/media/img/logo_ete.svg">
+        <img class="logo"id=keep-on alt="logo"src="./statics/media/img/COMPUTADORA.png">
+    </div>
+
+    <div class="botoncitos">
+        <div class="botones-de-arriba">
+            <form action="./dynamics/php/InicioDeSesionAlumno.php">
+                <button class="boti" id="alumno">Alumnado
+                    <img src="statics/media/img/puma-uno-Photoroom.png" alt="Puma1" class="puma-al">
+                </button>
+            </form>
+
+             <form action="./dynamics/php/InicioDeSesionMaestro.php">
+                <button class="boti-dos" id="profe">Profesorado
+                    <img src="statics/media/img/puma-dos-removebg-preview.png" alt="Puma2" class="puma-pro">
+                </button>
+            </form>
+        </div>
+        <form action="./dynamics/php/InicioDeSesionAdministrador.php">
+            <button class="boti-tres" id="admin">Administración
+            <img src="statics/media/img/puma-tres-removebg-preview.png" alt="Puma3" class="puma-ad">
+            </button>
+        </form>
+    </div>
+</body>
+</html>

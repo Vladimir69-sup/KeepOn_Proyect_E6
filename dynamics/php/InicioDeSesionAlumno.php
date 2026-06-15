@@ -65,8 +65,18 @@
     <meta name="description" content="Inicio de sesion del alumno">
     <title>Inicio de Sesion</title>
     <link rel="stylesheet" href="../../statics/css/InicioDeSesionAlumno.css">
+    <link rel="stylesheet" href="../../statics/css/barra_superior.css">
+    <link rel="icon" href="../../statics/media/img/COMPUTADORA.png" type="image/png">
 	</head>
 <body>
+     <!--Seccion de barra superior-->
+    <div id="barra_superior">
+        <img class="logo"id="unam"alt ="logo"src="../../statics/media/img/logo_unam.svg">   
+        <img class="logo"id="enp"alt ="logo"src="../../statics/media/img/logo_enp.svg">           
+        <img class="logo"id="etes"alt ="logo"src="../../statics/media/img/logo_ete.svg">
+        <img class="logo"id=keep-on alt="logo"src="../../statics/media/img/COMPUTADORA.png">
+    </div>
+
     <div id="contenedor-inicio-sesion-alum">
         <form action="./InicioDeSesionAlumno.php" method="POST">
             <h2>Inicio de Sesion</h2>
