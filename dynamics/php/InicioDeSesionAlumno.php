@@ -70,7 +70,7 @@
     <div id="contenedor-inicio-sesion-alum">
         <form action="./InicioDeSesionAlumno.php" method="POST">
             <h2>Inicio de Sesion</h2>
-            <img src="../../../img/monkey-alumno.png" width="150px" class="imagen">
+            <img src="../../statics/media/img/monkey-alumno.png" width="150px" class="imagen">
             <label for="usuario"></label><br>
             <input type="text" id="username" name="username" placeholder="Usuario: no. de cuenta" required><br>
             <label for="contraseña"></label><br>
