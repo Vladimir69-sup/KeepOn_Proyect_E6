@@ -7,10 +7,20 @@
     <meta name="description" content="Pagina de inicio">
     <link rel="stylesheet" href="index.css">
     <title>Home</title>
-	</head>
+    </head>
 <body>
-    <button id="alumno">Alumnado</button>
-    <button id="profe">Profesorado</button>
-    <button id="admin">Administracion</button>
+    <div class="botoncitos">
+        <div class="botones-de-arriba">
+            <button class="boti" id="alumno">Alumnado
+            <img src="statics/media/img/puma-uno-Photoroom.png" alt="Puma1" class="puma-al">
+            </button>
+            <button class="boti-dos" id="profe">Profesorado
+            <img src="statics/media/img/puma-dos-removebg-preview.png" alt="Puma2" class="puma-pro">
+            </button>
+        </div>
+        <button class="boti-tres" id="admin">Administracion
+        <img src="statics/media/img/puma-tres-removebg-preview.png" alt="Puma3" class="puma-ad">
+        </button>
+    </div>
 </body>
 </html>
