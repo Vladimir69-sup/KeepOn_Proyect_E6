@@ -1,6 +1,6 @@
 <?php
-    const DBHOST = "localhost";
-    const DBUSER = "root";
+    const DBHOST = "127.0.0.1"; // <-- Asegúrate de que no diga localhost
+    const DBUSER = "karla";     // <-- Asegúrate de que diga karla y no root
     const PASSWORD = "";
     const DB = "keep_on_db";
 
@@ -10,5 +10,4 @@
         return $conexion;   
     }
     $conexion = connect();
-
-?> 
+?>
