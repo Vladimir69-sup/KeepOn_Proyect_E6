@@ -70,7 +70,43 @@ summary{
     align-items: flex-end;
 }
 
+#ops_alumno{
+    display: none;
+}
+
+#ops_alumno:checked ~ #mensaje
+{
+    display: block;
+    left:0;
+}
+
+#mensaje{
+    display: none;
+    position: absolute;
+    margin-left: 60vw;
+    width: 500px;
+    height: 320px;
+    background-color: aliceblue;
+}
+
+#boton_si{
+    width: 150px;
+    border-radius: 5%;
+    background-color: green;
+}
+#verif:valid ~ #boton_yes{
+    display: block;
+    left:0;
+}
+
+#verif{
+    display: none;
+}
+#boton_no{
+    background-color: red;
+}
+
 .imgs-2{
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 42px;
+    max-height: 42px;
 }
