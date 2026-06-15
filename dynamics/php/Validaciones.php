@@ -62,10 +62,11 @@ function validaCorreo($email){
 
 }
 
-function validaNumero($edad){
+function validaNumero($edad)
+{
 
     if(filter_var($edad, FILTER_SANITIZE_NUMBER_INT))
-        echo "La edad '$email' es válida.\n"; 
+        echo "La edad '$edad' es válida.\n"; 
 
 }
 

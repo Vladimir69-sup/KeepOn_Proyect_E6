@@ -19,7 +19,7 @@
 </header>
 <body>
     <div class="contenedor-cuestionarios">
-        <div class="header-cuestionario">Cuestionarios<a class="nuevo-formulario" href="CrearFormulario.php" class="btn-editar">+Nuevo</a></div>
+        <div class="header-cuestionario">Cuestionarios<a class="nuevo-formulario" href="nuevo_renovado.php" class="btn-editar">+Nuevo</a></div>
         <div class="cuestionarios">
             <table>
                 <thead class ="thead-formulario">
