@@ -78,10 +78,10 @@
 <body>
      <!--Seccion de barra superior-->
     <div id="barra_superior">
-        <img class="logo"id="unam"alt ="logo"src="../../statics/media/img/logo_unam.svg">   
-        <img class="logo"id="enp"alt ="logo"src="../../statics/media/img/logo_enp.svg">           
-        <img class="logo"id="etes"alt ="logo"src="../../statics/media/img/logo_ete.svg">
-        <img class="logo"id=keep-on alt="logo"src="../../statics/media/img/COMPUTADORA.png">
+       <a href="https://www.unam.mx/"><img class="logo"id="unam"alt ="logo"src="../../statics/media/img/logo_unam.svg"></a>
+        <a href=""https://enp.unam.mx/"><img class="logo"id="enp"alt ="logo"src="../../statics/media/img/logo_enp.svg"></a>          
+        <a href="https://www.ete.enp.unam.mx/"><img class="logo"id="etes"alt ="logo"src="../../statics/media/img/logo_ete.svg"></a>
+        <a href="../../index.html"><img class="logo"id=keep-on alt="logo"src="../../statics/media/img/COMPUTADORA.png"></a>
     </div>
 
     <div id="contenedor-inicio-sesion-alum">

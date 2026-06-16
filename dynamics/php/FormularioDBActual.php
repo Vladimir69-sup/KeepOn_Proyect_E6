@@ -1,12 +1,7 @@
 <?php
+    session_start();
     //FORMULARIO PARA PODER VOLVER A ENTREGAR MÚLTIPLES VECES
-
-    const DBHOST = "localhost";
-    const DBUSER = "root";
-    const PASSWORD = "";
-    const DB = "keep_on_db";
-
-    $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
+    include 'conexion.php';
     
     $guardadoForm = false;
     //"lista" para que sepa que tipo de input debe ser dependiendo del idTipoPregunta de la base de datos 🍳
@@ -19,7 +14,7 @@
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_formulario = $_GET['id_formulario'];
-        $idUsuario = 1; //este no existe es solo para probarlo pero aún no sé cómo está eso de los Usuarios
+        $idUsuario = $_SESSION['idUsuario']; //este no existe es solo para probarlo pero aún no sé cómo está eso de los Usuarios
 
         //Consulta del idAlumno 
         $consultaAlumno = "SELECT idAlumno FROM infoAlumno WHERE idUsuario =  $idUsuario";
@@ -107,8 +102,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FormularioCondiciones</title>
     <link rel="stylesheet" href="../../statics/css/FormularioCondiciones.css">
+    <link rel="stylesheet" href="../../statics/css/navbar.css"> 
+    <link rel="icon" href="../../statics/media/img/COMPUTADORA.png" type="image/png">
 </head>
 <body>
+     <div id="barra_superior">
+
+        <input type="checkbox" id="menu_lateral">
+
+        <label for="menu_lateral">
+            <img class="logo"id="menu_imagen"alt ="menu"src="../../statics/media/img/menu_hamburguesa.png">
+        </label>
+
+        <a href="https://www.unam.mx/"><img class="logo"id="unam"alt ="logo"src="../../statics/media/img/logo_unam.svg"></a>
+        <a href=""https://enp.unam.mx/"><img class="logo"id="enp"alt ="logo"src="../../statics/media/img/logo_enp.svg"></a>          
+        <a href="https://www.ete.enp.unam.mx/"><img class="logo"id="etes"alt ="logo"src="../../statics/media/img/logo_ete.svg"></a>
+       <!-- <img class="logo"id="compu"alt ="logo"src="./img/logo_compu.png">-->
+        <a href="./alumno.php"><img class="logo"id=keep-on alt="logo"src="../../statics/media/img/COMPUTADORA.png"></a>
+        <a href="./VistaPerfilAlumnoDBActual.php"><img id="user"src="../../statics/media/img/user.png"></a>
+        <a href="./logout.php"><img id="user"src="../../statics/media/img/logout.png"></a>
+
+        <article id="barra_lateral">
+            <section  id="primero_barra_lateral"></section>
+            <section id="segundo_barra_lateral"class="bloque_linea">
+                <a class="enlace"href="./actividades.html">
+                    <h3>ACTIVIDADES</h3>
+                </a>
+            </section>
+            <section class="bloque_linea">
+                <a class="enlace"href="./formulario_evaluacion.html">
+                    <h3>FORMULARIOS</h3>
+                </a>
+            </section>
+            <section class="bloque_linea">
+                <a class="enlace"href="./recursos_apoyo.html">
+                    <h3>RECURSOS DE APOYO</h3>
+                </a>
+            </section>
+            <section class="bloque_linea">
+                <a class="enlace"href="./proAnteriores.html">
+                   <h3>PROYECTOS ANTERIORES</h3>
+                </a>
+            </section>
+        </article> 
+    </div>
+    
     <div class="contenedor-principal">
         <div class="contenido">
             <?php

@@ -12,7 +12,7 @@
     height: 100px;
     display: flex; 
     align-items: center; /*para acomodarlos en el centro verticalmente  */
-    justify-content: center;
+    justify-content: space-evenly;
 }
 .logo 
 {

@@ -1,5 +1,9 @@
 <?php 
-    include 'Conexion.php';
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    
+    include 'conexion.php';
     include 'Validaciones.php';
     session_start();
 
@@ -21,21 +25,21 @@
                             $error = "El usuario debe ser numérico";
                             
                         }
-                    //Tengo que cambiar solo esta linea para los demas inicios de sesions
+                    
                     $identificador = "SELECT * FROM infoMaestro WHERE numTrabajador = $usuario_limpio"; //regresa todas las columnas de informacion donde el numero de cuenta es igual al que nos paso el usuario
                     $consulta1 = mysqli_query (connect(), $identificador); 
                     if(mysqli_num_rows($consulta1) === 1) //verifica que el objeto iterable solo nos regrese una fila
                         {
                             $res = mysqli_fetch_assoc($consulta1);
                             $idUsuario = $res["idUsuario"];
-                            $consulta2 = mysqli_query (connect(), "SELECT (fechaNacimiento) FROM infogeneralusuario WHERE idUsuario = $idUsuario");
+                            $consulta2 = mysqli_query (connect(), "SELECT (fechaNacimiento) FROM infoGeneralUsuario WHERE idUsuario = $idUsuario");
                             $res2 = mysqli_fetch_assoc($consulta2);
                             $contrasenadb = $res2["fechaNacimiento"];
                             if($contrasenadb === $contrasena_limpia)
                                 {
                                     $_SESSION["idMaestro"] = $res["idMaestro"];
                                     $_SESSION["idUsuario"] = $res["idUsuario"];
-                                    header ("Location: ./inicio.php");
+                                    header ("Location: ./VistaPrincipalProfesor.php");
                                     
                                 }
                             else 
@@ -45,7 +49,10 @@
 
                                 }
 
-                        }         
+                        } 
+                        else{
+                            $error="El usuario no está registrado.";
+                        }          
                 }
                 else
                     {
@@ -70,10 +77,10 @@
 <body>
      <!--Seccion de barra superior-->
     <div id="barra_superior">
-        <img class="logo"id="unam"alt ="logo"src="../../statics/media/img/logo_unam.svg">   
-        <img class="logo"id="enp"alt ="logo"src="../../statics/media/img/logo_enp.svg">           
-        <img class="logo"id="etes"alt ="logo"src="../../statics/media/img/logo_ete.svg">
-        <img class="logo"id=keep-on alt="logo"src="../../statics/media/img/COMPUTADORA.png">
+       <a href="https://www.unam.mx/"><img class="logo"id="unam"alt ="logo"src="../../statics/media/img/logo_unam.svg"></a>
+        <a href=""https://enp.unam.mx/"><img class="logo"id="enp"alt ="logo"src="../../statics/media/img/logo_enp.svg"></a>          
+        <a href="https://www.ete.enp.unam.mx/"><img class="logo"id="etes"alt ="logo"src="../../statics/media/img/logo_ete.svg"></a>
+        <a href="../../index.html"><img class="logo"id=keep-on alt="logo"src="../../statics/media/img/COMPUTADORA.png"></a>
     </div>
 
     <div id="contenedor-inicio-sesion-prof">

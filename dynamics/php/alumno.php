@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keep-on</title>
+    <title>Inicio</title>
     <link rel="stylesheet" href="../../statics/css/alumno.css"> 
     <link rel="stylesheet" href="../../statics/css/navbar.css"> 
     <link rel="icon" href="../../statics/media/img/COMPUTADORA.png" type="image/png">
@@ -28,7 +28,7 @@
         <a href="https://www.ete.enp.unam.mx/"><img class="logo"id="etes"alt ="logo"src="../../statics/media/img/logo_ete.svg"></a>
        <!-- <img class="logo"id="compu"alt ="logo"src="./img/logo_compu.png">-->
         <a href="./alumno.php"><img class="logo"id=keep-on alt="logo"src="../../statics/media/img/COMPUTADORA.png"></a>
-        <a href=""><img id="user"src="../../statics/media/img/user.png"></a>
+        <a href="./VistaPerfilAlumnoDBActual.php"><img id="user"src="../../statics/media/img/user.png"></a>
         <a href="./logout.php"><img id="user"src="../../statics/media/img/logout.png"></a>
 
         <article id="barra_lateral">
