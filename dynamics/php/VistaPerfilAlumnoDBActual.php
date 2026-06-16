@@ -55,11 +55,30 @@
     <div class="contenedor-apartados">
         <div class="datos-alumno">
             <img class="foto-perfil" src="<?php echo $fotoAlumno;?>" alt="Foto de Perfil">
+            <?php 
+                $consultaDatos = "SELECT nombre, fechaNacimiento, primerApellido, segundoApellido FROM infoGeneralUsuario WHERE idUsuario = $idUsuario";
+                $paqDatos = mysqli_query($conexion, $consultaDatos);
+                $datosMostrar = $paqDatos->fetch_array();
+                $nombre = $datosMostrar['nombre'];
+                $primerApellido = $datosMostrar['primerApellido'];
+                $segundoApellido = $datosMostrar['segundoApellido'];
+                $fechaNacimiento = $datosMostrar['fechaNacimiento'];
+                $consultaDatosEspecificos = "SELECT numeroCuenta, idGrupo FROM infoAlumno WHERE idUsuario = $idUsuario";
+                $paqDatosEsp = mysqli_query($conexion, $consultaDatosEspecificos);
+                $datosEsp = $paqDatosEsp->fetch_array();
+                $numeroCuenta = $datosEsp['numeroCuenta'];
+                $idGrupoAl = $datosEsp['idGrupo'];
+
+                $consultaGrupo= "SELECT nombreGrupo FROM grupo WHERE idGrupo = $idGrupoAl";
+                $paqNombreGrupo = mysqli_query($conexion, $consultaGrupo);
+                $datosGrupo = $paqNombreGrupo->fetch_array();
+                $grupo = $datosGrupo['nombreGrupo'];
+            ?>
             <div>
-                <p>Nombre del Alumno (Tú)</p>
-                <p>Número de Cuenta</p>
-                <p>Fecha de Nacimiento</p>
-                <p>Grupo al que pertenece</p> 
+                <p><?php echo $nombre . $primerApellido . $segundoApellido ?> (Tú)</p>
+                <p><?php echo $numeroCuenta?></p>
+                <p><?php echo $fechaNacimiento?></p>
+                <p>Grupo: <?php echo $grupo?></p> 
             </div>
             
             <form class="mostrar-abajo" method="POST" enctype="multipart/form-data">
