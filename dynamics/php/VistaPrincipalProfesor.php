@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="contenedor-apartados">
-                <a href="https://www.google.com/maps" class="formato-cuadrado" id="btn-alumnos">ALUMNOS
+                <a href="AlumnosVistaProfesor.php" class="formato-cuadrado" id="btn-alumnos">ALUMNOS
                     <img class="icono" src="../../statics/media/img/IconoAlumnos.png" alt="Ícono de alumno 🙋">
                 </a>
                 <a href="https://www.google.com" class="formato-cuadrado" id="btn-forms">FORMULARIOS
