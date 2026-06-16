@@ -1,5 +1,5 @@
 <?php 
-    include 'Conexion.php';
+    include 'conexion.php';
     include 'Validaciones.php';
     session_start();
 
@@ -28,14 +28,15 @@
                         {
                             $res = mysqli_fetch_assoc($consulta1);
                             $idUsuario = $res["idUsuario"];
-                            $consulta2 = mysqli_query (connect(), "SELECT (fechaNacimiento) FROM infogeneralusuario WHERE idUsuario = $idUsuario");
+                            $consulta2 = mysqli_query (connect(), "SELECT (fechaNacimiento) FROM infoGeneralUsuario WHERE idUsuario = $idUsuario");
                             $res2 = mysqli_fetch_assoc($consulta2);
                             $contrasenadb = $res2["fechaNacimiento"];
                             if($contrasenadb === $contrasena_limpia)
                                 {
                                     $_SESSION["idAdministrador"] = $res["idAdministrador"];
                                     $_SESSION["idUsuario"] = $res["idUsuario"];
-                                    header ("Location: ./inicio.php");
+                                    header ("Location: ../AdminVistaIni.php");
+                                    exit();
                                     
                                 }
                             else 
@@ -70,7 +71,7 @@
 <body>
     <!--Seccion de barra superior-->
     <div id="barra_superior">
-        <img class="logo"id="unam"alt ="logo"src="../../statics/media/img/logo_unam.svg">   
+        <img class="logo"id="unam"alt ="logo"src="../statics/media/img/logo_unam.svg">   
         <img class="logo"id="enp"alt ="logo"src="../../statics/media/img/logo_enp.svg">           
         <img class="logo"id="etes"alt ="logo"src="../../statics/media/img/logo_ete.svg">
         <img class="logo"id=keep-on alt="logo"src="../../statics/media/img/COMPUTADORA.png">
