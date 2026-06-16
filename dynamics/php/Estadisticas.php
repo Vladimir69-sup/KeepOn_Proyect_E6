@@ -64,9 +64,10 @@
                                 $resPromedio = $paqPromedio->fetch_array();
                                 if ($resPromedio['promedio'] !== null) {
                                         $promedioAlumno = sprintf('%0.2f', $resPromedio['promedio']);
-                                    } else {
-                                        $promedioAlumno = "Sin calificación";
-                                    }
+                                } 
+                                else {
+                                    $promedioAlumno = "Sin calificación";
+                                }
 
                                 //PUNTOS
                                 //alumno:
