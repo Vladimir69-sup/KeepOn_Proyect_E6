@@ -236,3 +236,15 @@ select {
     cursor: pointer;
     font-size: 20px;
 }
+
+
+.descripcion{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+input[type="checkbox"]:checked + .editar-tarea .descripcion{
+    max-height: 300px; /* Ajusta este valor según el contenido */
+    margin-top: 10px;
+}
