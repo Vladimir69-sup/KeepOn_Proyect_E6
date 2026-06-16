@@ -1,5 +1,4 @@
 <?php
-    session_start();
     //CONECTAR A LA BASE DE DATOS   
     const DBHOST = "localhost";
     const DBUSER = "root";
@@ -7,23 +6,18 @@
     const DB = "keep_on_db";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
-    $idUsuario = 1; // idprueba -- $_SESSION['idUsuario']
-
+    if (isset($_GET['idUsuario'])) {
+        $idUsuario = intval($_GET['idUsuario']); 
+    } else {
+        header("Location: Estadisticas.php");
+        exit;
+    }
     $rutaFoto = "../../statics/media/img/";
-    $nombreFoto = "FotoUsuario" . $idUsuario . ".png"; //foto ususario 
-    $fotoAlumno = $rutaFoto . $nombreFoto;
-    
-    //mover abajo para que también se pueda actualizar en la db
-    if(isset($_POST['guardar-foto'])){
-        if(move_uploaded_file($_FILES['foto-perfil-alumno']['tmp_name'], $fotoAlumno)){
-            $sqlGuardarFoto = "UPDATE infoGeneralUsuario SET foto_perfil = '$nombreFoto' WHERE idUsuario = $idUsuario";
-            mysqli_query($conexion, $sqlGuardarFoto);
-        }
-    }
+    $nombreFoto = "FotoUsuario" . $idUsuario . ".png"; 
+    $fotoAlumno = $rutaFoto . "FotoUsuario" . $idUsuario . ".png";
     if (!file_exists($fotoAlumno)) {
-    $fotoAlumno = $rutaFoto . "FotoPerfil.png";
+        $fotoAlumno = $rutaFoto . "FotoPerfil.png";
     }
-
     //consulta alumno
     $consultaAlumno = "SELECT idAlumno FROM infoAlumno WHERE idUsuario = $idUsuario";
     $resultadoAlumno = mysqli_query($conexion, $consultaAlumno);
@@ -49,7 +43,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VistaPerfilAlumno</title>
-    <link rel="stylesheet" href="../../statics/css/VistaPerfilAlumno.css">
+    <link rel="stylesheet" href="../../statics/css/VistaVerPerfilDelAlumno.css">
 </head>
 <body>
     <div class="contenedor-apartados">
@@ -75,17 +69,11 @@
                 $grupo = $datosGrupo['nombreGrupo'];
             ?>
             <div>
-                <p><?php echo $nombre . $primerApellido . $segundoApellido ?> (Tú)</p>
+                <p><?php echo $nombre . " " . $primerApellido . " " . $segundoApellido ?></p>
                 <p><?php echo $numeroCuenta?></p>
                 <p><?php echo $fechaNacimiento?></p>
                 <p>Grupo: <?php echo $grupo?></p> 
             </div>
-            
-            <form class="mostrar-abajo" method="POST" enctype="multipart/form-data">
-                <input type="file" name="foto-perfil-alumno" id="inpt-ftalumno" accept="image/png, image/jpeg" style="display: none;" required>
-                <label for="inpt-ftalumno" class="editar-perfil">Editar foto de Perfil</label>
-                <button type="submit" name="guardar-foto" class="guardar-foto"> Guardar</button>
-            </form>
 
         </div>
         <div class="dos-secciones">
@@ -93,8 +81,7 @@
                 <h1>Condiciones de Estudio</h1>
                 <?php
                     //si fue enviado se debe mostrar las respuestas y si no que lo diga
-                    if($estadoEnviado == 1){
-                        $idUsuario = 1; // idprueba    
+                    if($estadoEnviado == 1){  
 
                         $consultaPreguntas =  "SELECT idPregunta, pregunta, idTipoPregunta FROM pregunta WHERE idFormulario = 1";
                         $resulPreguntas = mysqli_query($conexion, $consultaPreguntas);
@@ -134,14 +121,44 @@
                     }
                 ?>
             </div>
-            <div class="inferior-derecho">
-                <a href="FormularioDBActual.php?id_formulario=1"> <!--Modificar la url para que lleve en específico a esa, si no lo enviará a otra página-->
-                    <button id="formulario-condiciones">Formulario Condiciones de Estudio</button>
-                </a>
-                <p>Notas de tu profesor: </p>
-                <div class="notas-profesor">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fu</p>
-                </div>
+            <div class="mostrar-abajo">
+                <h2>Estadísticas</h2>
+                <?php
+                    //calificaión
+                    $consultaPromedio = "SELECT AVG(calificacion) AS promedio FROM formularioAlumno WHERE idAlumno = (SELECT idAlumno FROM infoAlumno WHERE idUsuario = $idAlumno)";
+                    $paqPromedio = mysqli_query($conexion, $consultaPromedio);
+                    $resPromedio = $paqPromedio->fetch_array();
+                    if ($resPromedio['promedio'] !== null) {
+                            $promedioAlumno = sprintf('%0.2f', $resPromedio['promedio']);
+                        } else {
+                            $promedioAlumno = "Sin calificación";
+                        }
+                    //puntos
+                    //alumno:
+                    $consultaPuntosAlumno = "SELECT SUM(rendimiento_alumno) AS obtenidos FROM formularioAlumno WHERE idAlumno = $idAlumno";
+                    $paqPuntosAlumno = mysqli_query($conexion, $consultaPuntosAlumno);
+                    $resPuntosAlumno = $paqPuntosAlumno->fetch_array();
+                    $puntosObtenidosAlumno = $resPuntosAlumno['obtenidos'];
+                    //totales:
+                    $consultaPuntosTotales = "SELECT SUM(rendimiento_esperado) AS totales FROM formulario WHERE idGrupo = $idGrupoAl";
+                    $paqPuntosTotales = mysqli_query($conexion, $consultaPuntosTotales);
+                    $datosPuntosTotales = $paqPuntosTotales->fetch_array();
+                    $puntosTotales = $datosPuntosTotales['totales'];
+                    if ($puntosTotales == 0) {
+                        $mostrarPuntos = "Aún no hay formularios";
+                    } else {
+                        $puntosObtenidosAlumno = $resPuntosAlumno['obtenidos'];
+                        $mostrarPuntos = $puntosObtenidosAlumno . "/" . $puntosTotales;
+                    }
+                    //TotalFormularios
+                    $conEntregados = "SELECT COUNT(*) AS total FROM formularioAlumno WHERE idAlumno = $idAlumno AND entregado = 1";
+                    $paqEntregados = mysqli_query($conexion, $conEntregados);
+                    $resEntregados = $paqEntregados->fetch_array();
+                    $entregadosText = $resEntregados['total'];
+                ?>
+                <p>Calificación General: <?php echo $promedioAlumno; ?></p>
+                <p>Puntos Totales: <?php echo $mostrarPuntos; ?></p>
+                <p>Formularios Entregados: <?php echo $entregadosText; ?></p>
             </div>
         </div>
     </div>

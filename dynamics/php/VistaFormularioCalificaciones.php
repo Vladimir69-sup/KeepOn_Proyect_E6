@@ -8,6 +8,7 @@
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
     $idUsuario = 1; // idprueba
+    $idFormulario = 1;
 
     //consulta alumno
     $consultaAlumno = "SELECT idAlumno FROM infoAlumno WHERE idUsuario = $idUsuario";
@@ -16,7 +17,7 @@
     $idAlumno = $datosAlumno['idAlumno'];
     
     //Se consulta el estado del formulario
-    $consultaEstado = "SELECT entregado FROM formularioalumno WHERE idFormulario = 1 AND idAlumno = $idAlumno";
+    $consultaEstado = "SELECT entregado FROM formularioalumno WHERE idFormulario = $idFormulario AND idAlumno = $idAlumno";
     $resultadoEstado = mysqli_query($conexion, $consultaEstado);
 
     $formularioExiste = mysqli_num_rows($resultadoEstado);
@@ -46,7 +47,7 @@
                     if($estadoEnviado == 1){
                         $idUsuario = 1; // idprueba    
 
-                        $consultaPreguntas =  "SELECT idPregunta, pregunta, idTipoPregunta, puntaje_rendimiento FROM pregunta WHERE idFormulario = 1";
+                        $consultaPreguntas =  "SELECT idPregunta, pregunta, idTipoPregunta, puntaje_rendimiento FROM pregunta WHERE idFormulario = $idFormulario";
                         $resulPreguntas = mysqli_query($conexion, $consultaPreguntas);
                         $totalPreguntas = mysqli_num_rows($resulPreguntas); //total de filas (preguntas)
 
@@ -107,6 +108,19 @@
                 <a href="FormularioCalificacionesDB.php?id_formulario=1"> <!--Modificar la url para que lleve en específico a esa, si no lo enviará a otra página-->
                     <button id="formulario-condiciones">Formulario Condiciones de Estudio</button>
                 </a>
+                <p><strong>Calificación: </strong></p>
+                <?php
+                    if($estadoEnviado == 1){
+                        $consultaCalificacion = "SELECT calificacion FROM formularioAlumno WHERE idFormulario = $idFormulario AND idAlumno = $idAlumno";
+                        $resulconsultaCalificacion = mysqli_query($conexion, $consultaCalificacion);
+                        $calificacion = $resulconsultaCalificacion->fetch_array();
+                        $textCalificacion = $calificacion['calificacion'];
+                        echo "<p>" . sprintf('%0.2f', $textCalificacion) . "</p>";
+                    }
+                    else{
+                        echo "<p>Aún no hay una calificación</p>";
+                    }
+                ?>
             </div>
         </div>
     </div>

@@ -41,13 +41,11 @@
             </div>
         </div>
         <div class="contenedor-derecho">
-            <p class="formato-cuadrado">Estadísticas Globales</p>
-            <div class="estadisticas-globales">
-                <!--Aquí genera las gráficas acerca de los grupos🦞-->
-                <div class="contenedor-grafica">Soy una gráfica lol</div>
-                <div class="contenedor-grafica">Soy una gráfica lol</div>
-                <div class="contenedor-grafica">Soy una gráfica lol</div>
-            </div>
+            
+            <a href="Estadisticas.php" class="estadisticas-globales">
+                Estadísticas    
+                <img class="icono" id="estadisticas" src="../../statics/media/img/IconoEstadisticas.png" alt="Ícono de Estadísticas">
+            </a>
         </div>
     </div>
 </body>
