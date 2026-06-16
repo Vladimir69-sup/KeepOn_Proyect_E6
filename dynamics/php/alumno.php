@@ -34,7 +34,7 @@
         <article id="barra_lateral">
             <section  id="primero_barra_lateral"></section>
             <section id="segundo_barra_lateral"class="bloque_linea">
-                <a class="enlace"href="./actividades.html">
+                <a class="enlace"href="./ActividadesVistaAlumno.php">
                     <h3>ACTIVIDADES</h3>
                 </a>
             </section>
@@ -66,7 +66,7 @@
             </a>
         </seccion>
         <seccion id="segundo">
-            <a class="botones"id="actividades"href="./actividades.html">
+            <a class="botones"id="actividades"href="./ActividadesVistaAlumno.php">
                     <h2>ACTIVIDADES</h2>
                     <img id="form"src="../../statics/media/img/IconoActividades.png">
             </a>
