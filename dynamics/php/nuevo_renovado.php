@@ -174,6 +174,10 @@
                 <p>Descripción</p>
                 <textarea class="tex_info_formualio"name="descripcion_formulario" id="descripcion_formulario" placeholder="Ingresa una breve descripción"></textarea>
 
+                <div style='margin-top: 15px; text-align: right;'>;
+              <a class='boton-continuar' href='./nuevo_renovado.php?estado=selecciona' style='padding: 8px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 4px;'>Continuar</a>";
+                </div>";
+
             <?php
                 $maestroActual=1;  //cambiar al hacer merge por el id amestro d ela sesion actual 
                 $grupo="SELECT (nombreGrupo, idGrupo) FROM grupo WHERE idMaestro = $maestroActual";
