@@ -30,14 +30,14 @@
             <p class="desc">Eres un explorador espacial, tu nave se averió en la luna
                 ¿Podrás superar los desafíos? ¿Lograrás encontrar a tu nave 
                 y a tu tripulación?</p>
-            <button class="botones1">Mas Informacion</button>
+            <button onclick="location.href='../../templates/meowstellar.html'" class="botones1">Mas Informacion</button>
         </div>
         <div class="juego2">
             <p id="tit2">Snoopy</p>
             <img src="../../statics/media/img/snoopy1.png" class="imagenes">
             <p class="desc">Woodstock está perdido,y Snoopy deberá encontrarlo
                 ¿Podrás superar los desafíos? </p>
-            <button class="botones">Mas Informacion</button>
+            <button onclick="location.href='../../templates/snoopy.html'" class="botones">Mas Informacion</button>
         </div>
         <div class="juego3">
             <p id="tit3">Juan Garnachas</p>
@@ -45,7 +45,7 @@
             <p class="desc">Eres dueño de un negocio y tienes que triunfar en las garnachas
                 ¿Lograras pasar cada nivel sin caer en banca rota?
             </p>
-            <button class="botones">Mas Informacion</button>
+            <button onclick="location.href='../../templates/Juan-garnachas.html'" class="botones">Mas Informacion</button>
         </div>
         <div class="juego4">
             <p id="tit3">Coyotron</p>
@@ -53,7 +53,7 @@
             <p class="desc">Eres un estudiante de prepa 6, tendras que aprobar
                 las distintas materias comprendidas en los tres grados de bachillerato
                 ¿Lograras graduarte?</p>
-            <button class="botones1">Mas Informacion</button>
+            <button onclick="location.href='../../templates/coyotron.html'"class="botones1">Mas Informacion</button>
         </div>
         <div class="juego5">
             <p id="tit3">Bebes en peligro</p>
@@ -61,7 +61,7 @@
             <p class="desc">Eres una cigueña y tendras que llevar a salvo a un bebe con 
                 sus nuevos papas ¿Seras capaz de esquivar los obstaculos?
             </p>
-            <button class="botones">Mas Informacion</button>
+            <button onclick="location.href='../../templates/bebes-en-peligro.html'" class="botones">Mas Informacion</button>
         </div>
     </div>
 </body>
