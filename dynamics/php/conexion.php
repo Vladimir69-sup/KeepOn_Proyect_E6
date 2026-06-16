@@ -1,12 +1,15 @@
 <?php
-    const DBHOST = "127.0.0.1"; 
-    const DBUSER = "root";     
-    const PASSWORD = "";
-    const DB = "keep_on_db";
+    const DBHOST = "localhost"; 
+    const DBUSER = "karla"; //
+    const PASSWORD = "000"; // 
+    const DB = "keep_on_db"; 
 
     function connect()
     {
         $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
+        if (!$conexion) {
+            die("Error de conexión: " . mysqli_connect_error());
+        }
         return $conexion;   
     }
     $conexion = connect();

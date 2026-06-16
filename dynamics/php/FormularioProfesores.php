@@ -15,10 +15,11 @@
         <input class="buscador" type="text" placeholder="Busca algo aquí" >
         <button class="buscador" name="buscador" type="submit"><img style="border-radius: 100px;" src="../../statics/media/img/imagenLupa.png" height="50px"></button>
 
-    </div>
+    </div>nuevo_renovado
 </header>
 <body>
     <div class="contenedor-cuestionarios">
+        <!-------------------------------aqui link q lleva a "NUEVO RENOVADO" === CREACION DE FORMULARIOS-------------->
         <div class="header-cuestionario">Cuestionarios<a class="nuevo-formulario" href="nuevo_renovado.php" class="btn-editar">+Nuevo</a></div>
         <div class="cuestionarios">
             <table>

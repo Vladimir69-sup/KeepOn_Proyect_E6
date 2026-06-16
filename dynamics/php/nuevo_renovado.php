@@ -163,72 +163,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Formulario</title>
-   <!-- <link rel="stylesheet" href="../../statics/css/style.css">-->
-
+    <link rel="stylesheet" href="../../statics/css/formularioProfesores.css">
 </head>
-<header>
+<header> <!-----------aca poner el de encabezados karla ----------------->
     <div class="contenedor-encabezado">
         <a href="FormularioProfesores.php"><img src="../../statics/media/img/imagenRegresar.png" height="80px"></a>
     </div>
 </header>
 <body>
     
-    <form action="" method="POST">   <!--aqui empieza el forms ------------------------------->
-        <section id="seccion_arriba">
-        <div class="lado-izquierdo">
+    <form id="superFormss" action="" method="POST">   <!--aqui empieza el forms ------------------------------->
+
+        <section id="mitad">
             <div class = "informacion-formulario">
-            <?php 
-                $tituloF = $borrador['titulo'] ?? '';
-                $descripcionF = $borrador['descripcion'] ?? '';
-                echo "<p>Título</p>";
-                echo "<textarea class='tex_info_formualio' name='titulo_formulario' id='titulo_formulario' placeholder='Ingresa el título del formulario...'>" . $tituloF . "</textarea>";                        
-                
-                echo "<p>Descripción</p>";
-                echo "<textarea class='tex_info_formualio' name='descripcion_formulario' id='descripcion_formulario' placeholder='Ingresa una breve descripción'>" . $descripcionF . "</textarea>";
-            ?>
+                <?php 
+                    $tituloF = $borrador['titulo'] ?? '';
+                    $descripcionF = $borrador['descripcion'] ?? '';
+                    echo "<p>Título</p>";
+                    echo "<textarea class='tex_info_formualio' name='titulo_formulario' id='titulo_formulario' placeholder='Ingresa el título del formulario...'>" . $tituloF . "</textarea>";                        
+                    
+                    echo "<p>Descripción</p>";
+                    echo "<textarea class='tex_info_formualio' name='descripcion_formulario' id='descripcion_formulario' placeholder='Ingresa una breve descripción'>" . $descripcionF . "</textarea>";
+                ?>
 
-            <?php
-                $maestroActual=1;  //cambiar al hacer merge por el id amestro d ela sesion actual 
-                $grupo="SELECT nombreGrupo, idGrupo FROM grupo WHERE idMaestro = $maestroActual";
-                $query=mysqli_query($conexion, $grupo);
-                
-                echo "<select class='grupo' name='grupo' id='grupo'required>";
+                <?php
+                    $maestroActual=1;  //cambiar al hacer merge por el id amestro d ela sesion actual 
+                    $grupo="SELECT nombreGrupo, idGrupo FROM grupo WHERE idMaestro = $maestroActual";
+                    $query=mysqli_query($conexion, $grupo);
 
-                while($query_info=mysqli_fetch_assoc($query)){
-                    $nombreGrupo=$query_info["nombreGrupo"];
-                $idGrupo=$query_info["idGrupo"];
-                    echo "<option value='$idGrupo'>$nombreGrupo</option>";
+                    echo "<p>GRUPO</p>";
+                    
+                    echo "<select class='grupo' name='grupo' id='grupo'required>";
 
-                
+                    while($query_info=mysqli_fetch_assoc($query)){
+                        $nombreGrupo=$query_info["nombreGrupo"];
+                    $idGrupo=$query_info["idGrupo"];
+                        echo "<option value='$idGrupo'>$nombreGrupo</option>";
+                    }
+                    echo "</select>";
+                ?>
 
-                }
+                 <div class="lista_temporal">
+                    <H2>LISTA DE PREGUNTAS</H2>
+                        <?php
+                            //  preguntas guardadas del borrador
+                            if(!empty($borrador['preguntas']))
+                            {
+                                echo "<ol>"; //de lsita ordenada 
+                                    foreach($borrador['preguntas'] as $p_lista)
+                                    {
 
-                echo "</select>";
-            ?>
-
+                                        echo "<li style='margin-bottom: 10px;'>";
+                                        echo "<strong>" . $p_lista['pregunta'] . "</strong> (" . $p_lista['puntaje'] . " pts)";
+                                        
+                                        // sus opciones (radio o checkbox), se recorre paar poder imprimiralas 
+                                        if(!empty($p_lista['opciones']))
+                                        {
+                                                echo "<ul style='list-style-type: circle;'>";
+                                                foreach($p_lista['opciones'] as $o_lista)
+                                                {
+                                                    $correcta = "";
+                                                    if($o_lista['correcta'] == 1)
+                                                        $correcta = "✅";
+                                                    echo "<li>";
+                                                    echo $o_lista['opcion'];
+                                                    echo $correcta;
+                                                    echo "</li>";
+                                                }
+                                            echo "</ul>";
+                                        }
+                                        
+                                        echo "</li>";
+                                    }
+                                echo "</ol>";
+                            }
+                            else
+                            {
+                                echo "<p>Aún no hay preguntas añadidas.</p>";
+                            }
+                        ?>
+                    </div>
             </div>
+        </section>
 
-            <?php
-
-                
-                if((($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST['continuar']))) || (isset($_GET['estado']) &&  $_GET['estado'] === "selecciona")){
-                    echo "<div class='header-preguntas' style='font-size: 20p'>";
-                    echo "<a id='AgregarPregunta' href='nuevo_renovado.php?estado=selecciona' >+ Agregar Pregunta</a> "  ;               
-                    echo "</div>";
-                } else {
-                    echo "<input type='submit' name='continuar' id='boton_publicar' value='CONTINUAR'></input>";
-                }
-            ?>  
-
-            
+    <section id="segundoSection">
+                <div class="contenedor-padre" id="mas_preguntas"> 
+                    <?php          
+                        if((($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST['continuar']))) || (isset($_GET['estado']) &&  $_GET['estado'] === "selecciona")){
+                            echo "<div class='header-preguntas' style='font-size: 20p'>";
+                            echo "<a id='AgregarPregunta' href='nuevo_renovado.php?estado=selecciona' >+ Agregar Pregunta</a> "  ;               
+                            echo "</div>";
+                        } else {
+                            echo "<input type='submit' name='continuar' id='boton_publicar' value='CONTINUAR'></input>";
+                            }
+                    ?>  
+                </div>
             <?php
 
            
             if(isset($_GET['estado']))
             {
-                echo "<a class='tipo-pregunta' id='pregunta-abierta' href='nuevo_renovado.php?estado=selecciona&tipo=abierta'> Abierta</a>";   //eestado='selecciona'----> para que vuelva a entrara en el if del get    & manda todos los cositos que le mandas en una cajita en la url
-                echo  "<a class='tipo-pregunta'  id='pregunta-opcion-una'  href='nuevo_renovado.php?estado=selecciona&tipo=radio'>Opción Múltiple<br>(Una Sola Respuesta)</a>";
-                echo "<a class='tipo-pregunta' id='pregunta-opcion-varias' href='nuevo_renovado.php?estado=selecciona&tipo=checkbox'>Opción Múltiple<br>(Varias Respuestas)</a> " ;  
+                echo "<a class='tipo-pregunta' id='pregunta-abierta' href='nuevo_renovado.php?estado=selecciona&tipo=abierta'> Abierta</a> <br>";   //eestado='selecciona'----> para que vuelva a entrara en el if del get    & manda todos los cositos que le mandas en una cajita en la url
+                echo  "<a class='tipo-pregunta'  id='pregunta-opcion-una'  href='nuevo_renovado.php?estado=selecciona&tipo=radio'>Opción Múltiple (Una Sola Respuesta)</a><br>";
+                echo "<a class='tipo-pregunta' id='pregunta-opcion-varias' href='nuevo_renovado.php?estado=selecciona&tipo=checkbox'>Opción Múltiple (Varias Respuestas)</a> " ;  
             
                 if(isset($_GET['tipo']))
                 {
@@ -308,55 +345,14 @@
                     }
                 }
             }
-    ?>
-
-        </div>
-
-            <div class="contenedor-padre" id="mas_preguntas" >  
-
-                <div class="lista_temporal">
-                    <?php
-                    //  preguntas guardadas del borrador
-                    if(!empty($borrador['preguntas']))
-                    {
-                        echo "<ol>"; //de lsita ordenada 
-                            foreach($borrador['preguntas'] as $p_lista)
-                            {
-
-                                echo "<li style='margin-bottom: 10px;'>";
-                                echo "<strong>" . $p_lista['pregunta'] . "</strong> (" . $p_lista['puntaje'] . " pts)";
-                                
-                                // sus opciones (radio o checkbox), se recorre paar poder imprimiralas 
-                                if(!empty($p_lista['opciones']))
-                                {
-                                        echo "<ul style='list-style-type: circle;'>";
-                                        foreach($p_lista['opciones'] as $o_lista)
-                                        {
-                                            $correcta = "";
-                                            if($o_lista['correcta'] == 1)
-                                                $correcta = "✅";
-                                            echo "<li>";
-                                            echo $o_lista['opcion'];
-                                            echo $correcta;
-                                            echo "</li>";
-                                        }
-                                    echo "</ul>";
-                                }
-                                
-                                echo "</li>";
-                            }
-                        echo "</ol>";
-                    }
-                    else
-                    {
-                        echo "<p>Aún no hay preguntas añadidas.</p>";
-                    }
-                    ?>
+            ?>
                 </div>
+                <input type="submit" name='publicar' id="boton_publicar" value='PUBLICAR'></input>;
             </div>
-        </div>
-        </section>
-        <input type="submit" name='publicar' id="boton_publicar" value='PUBLICAR'></input>;
+
+            
+    </section>
+
 </form>
 
 </body>

@@ -37,9 +37,11 @@
     justify-content: center;
 }
 
-a
+a ,.tipo-pregunta
 {
     display: line;
+    background-color: rgb(42, 99, 135);
+    margin-bottom: 30px;
     text-decoration: none;
 }
 
@@ -98,8 +100,8 @@ table, th, td
 {
     background-color: var(--color-primario);
     border-radius: 15px;
-    width: 85%;
-    height: 70%;
+    width: 85;
+    height: 90%;
     padding: 25px;
     font-size: 20px;
     display:flex;
@@ -113,13 +115,46 @@ table, th, td
     margin-right: 25px;
 }
 
-.contenedor-preguntas
+/*----------------------------------------------nuevas cosas   del css ------------------------------------------------------------------*/
+#superFormss{
+    background-color: rgb(162, 159, 159);
+    height:900px;
+    display: flex;          /* Alinea los elementos en fila por defecto */
+    gap: 15px;              /* Separación constante entre cada div/section */
+    white-space: nowrap;    /* Evita que los textos o bloques fuercen un salto */
+
+}
+
+#mitad{
+    width: 50%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 0px;
+}
+
+#grupo{padding:10px; width: 45%;}
+
+
+
+.lista_temporal{
+    background-color: #0b4285;
+    margin-top: 30px;
+    border-radius: 15px;
+}
+
+.opciones
+{
+    height: 500px;
+}
+
+
+.crear_pregunta
 {
     background-color: var(--color-secundario);
     border-radius: 15px;
-    width: 60%;
+    width: 95%;
     display: 1;
-    height: 100%;
+    height: 75%;
     border-right: auto;
     padding: 25px;
     font-size: 20px;
@@ -160,9 +195,6 @@ table, th, td
     margin-bottom: 20px;
     margin-top: 0px;
 }
-.tipo-pregunta{
-    display: none;
-}
 
 .preguntaBotones
 {  
@@ -173,16 +205,9 @@ table, th, td
 }
 .preguntaLetras{  color: #ffffff;}
 
-#label_agregar_preguntas
-{
-    background-color: #faf5f5;
-    border-radius: 15px;
-}
+
 textarea{
-    width: 100%;
-    height: 30px;
     border-radius: 15px;
-    padding: 10px;
     resize: none;
     font-size: 15px;
 }
@@ -190,6 +215,7 @@ textarea{
 #continuar{
     margin: 5px;
     width: 15vw;
+    height: 30px;
     border-radius: 10px;
     background-color:rgb(55, 165, 225) ;
     margin-left: 50px;
@@ -204,31 +230,16 @@ textarea{
 {
     position: relative;
     width:65%;
-    height: 600px;
+    height: 30px;
     margin-top: 30px;
     margin-right: 30px;
     border-radius: 20px;
     background-color: #a7a5a5;
-    display: none;
-}
-#Continuar:checked ~ #mas_preguntas{display: block;}
-#seccion_arriba
-{
-    background-color: blueviolet;
-    display: inline-flex; /* Activa la función Flexbox */
-    gap: 15px;      /* Espacio entre los divs (opcional) */
-    width: 100%;
-    height: 20vw;
-    margin-bottom: 0px;
 }
 
-.lado-izquierdo{
-    width: 45%;
-    background-color: chartreuse;
-    margin-bottom: 0px;
-}
 
-.header-preguntas:has(#AgregarPregunta:checked) .preguntaBotones{ display: block;}
+
+/*.header-preguntas:has(#AgregarPregunta:checked) .preguntaBotones{ display: block;}
 
 .tipo-pregunta:hover, #label_agregar_preguntas
 {cursor: pointer;}
@@ -249,7 +260,7 @@ body:has(#pregunta-opcion-una:checked) #segundoLabel{background-color:crimson;}
 body:has(#pregunta-opcion-varias:checked) #checkbox{ 
   display: block; 
 }
-body:has(#pregunta-opcion-varias:checked) #tercerLabel{background-color:crimson;}
+body:has(#pregunta-opcion-varias:checked) #tercerLabel{background-color:crimson;}*/
 
 
 
@@ -257,26 +268,14 @@ body:has(#pregunta-abierta:checked, #pregunta-opcion-una:checked, #pregunta-opci
     pointer-events: none; /* para no poder cliclear otro cuando ya hay uno presionado */
 }
 
-.crear_pregunta 
+
+#segundoSection
 {
-    display: none;             
-    position: absolute;        
-    background-color: #967fbe;
-    height: 450px;
-    width: 92%;               
-    left: 4%;                  
-    box-sizing: border-box;    
-    padding: 20px;             
+    width: 45%;
 }
 
 
-.botones_pregunta
-{
-    position: absolute;
-    bottom: 20px;     /* Lo pega al fondo del padre (a 20px del borde) */
-    right: 20px; 
-    gap: 15px;
-}
+
 .boton-guardar 
 {
     background-color: #4807b8;
@@ -289,26 +288,10 @@ body:has(#pregunta-abierta:checked, #pregunta-opcion-una:checked, #pregunta-opci
     bottom: 20px;     /* Lo pega al fondo del padre (a 20px del borde) */
     right: 20px;      /* Lo pega a la derecha del padre (a 20px del borde) */
 }
-.boton-borrar 
-{
-    background-color: #488de1;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
-    padding: 5px;
-    width: 110px;              
-    font-size:small;
-        /* Lo pega a la derecha del padre (a 20px del borde) */
-}
+
 #pregunta{width: 95%; height: 19px;}
 
-.puntaje_pregunta{
-    margin-top: 10px;
-    margin-left: 10px;
-    color: #ffffff;
-    display:inline-flex;
-    gap: 40px;
-}
+
 .posibles_respuestas{
     margin-left: 10px;
     color: #ffffff;
@@ -326,8 +309,6 @@ body:has(#pregunta-abierta:checked, #pregunta-opcion-una:checked, #pregunta-opci
     width: 80%;
     margin: 0%;
 }
-.inputs_radio{width:10%;}
-.imputs_checkbox{width: 10%; /* Ajusta este valor según prefieras */}
 
 .cuadro_almacena_opciones
 {
@@ -336,7 +317,8 @@ body:has(#pregunta-abierta:checked, #pregunta-opcion-una:checked, #pregunta-opci
     overflow-y: auto;   /*barra de desplazamiento por si son muchas preguntas*/
     display: flex;
     flex-direction: column;
-    height: 180px;
+    padding: 15px;
+    height: 400px;
 }
 .opciones_input{
     padding-left:50px;
@@ -351,4 +333,3 @@ body:has(#pregunta-abierta:checked, #pregunta-opcion-una:checked, #pregunta-opci
 }
 
 
-boton-guardar
