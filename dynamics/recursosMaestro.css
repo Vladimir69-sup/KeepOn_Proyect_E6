@@ -1,0 +1,85 @@
+/* ver_recursos.css */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: #eef1ff;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.contenedor{
+    width: 850px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.encabezado{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+h1{
+    color: rgb(33, 52, 126);
+}
+
+.boton{
+    background: #4338ca;
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.boton:hover{
+    background: #312e81;
+}
+
+.tabla{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.fila{
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    align-items: center;
+    padding: 18px;
+    border-radius: 15px;
+    background: #f8f9ff;
+    border: 1px solid #dbe1ff;
+}
+
+.titulo-tabla{
+    background: #dbe1ff;
+    font-weight: bold;
+    color: #21347e;
+}
+
+.fila a{
+    text-decoration: none;
+    background: #1a54a0;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.fila a:hover{
+    background: #6dbbc9;
+    color: black;
+}

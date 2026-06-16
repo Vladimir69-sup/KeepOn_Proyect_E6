@@ -1,0 +1,108 @@
+/* styles.css */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body
+{
+  background-color: #eef1ff;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.contenedor
+{
+  width: 800px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+h1
+{
+  color: rgb(33, 52, 126);
+  margin-bottom: 10px;
+}
+
+.subtitulo{
+  color: gray;
+  margin-bottom: 25px;
+}
+
+#abrir{
+  display: none;
+}
+
+.boton-abrir{
+  display: inline-block;
+  background: #4338ca;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.boton-abrir:hover{
+  background: #312e81;
+}
+
+.formulario{
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: 0.4s;
+}
+
+#abrir:checked ~ .formulario{
+  max-height: 400px;
+  opacity: 1;
+  margin-bottom: 30px;
+}
+
+.formulario h2{
+  margin-bottom: 15px;
+  color: #4338ca;
+}
+
+.formulario input{
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #c7d2fe;
+  border-radius: 12px;
+  outline: none;
+}
+
+.formulario input:focus{
+  border-color: #3c71e4;
+}
+
+.formulario input[type="url"]{
+  height: 70px;
+}
+
+.confirmar
+{
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 15px;
+  background: #1a54a0;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.confirmar:hover{
+  background: #6dbbc9;
+  color: rgb(0, 0, 0);
+}
+
