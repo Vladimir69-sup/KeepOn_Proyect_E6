@@ -1,16 +1,5 @@
 <?php
     session_start();
-    $rutaFoto = "../../statics/media/img/";
-    $nombreFoto = "FotoUsuario.png";
-    $fotoAlumno = $rutaFoto . $nombreFoto;
-
-    if(isset($_POST['guardar-foto'])){
-        move_uploaded_file($_FILES['foto-perfil-alumno']['tmp_name'], $fotoAlumno);
-    }
-    if (!file_exists($fotoAlumno)) {
-    $fotoAlumno = $rutaFoto . "FotoPerfil.png";
-    }
-
     //CONECTAR A LA BASE DE DATOS   
     const DBHOST = "localhost";
     const DBUSER = "root";
@@ -18,7 +7,22 @@
     const DB = "keep_on_db";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
-    $idUsuario = 1; // idprueba
+    $idUsuario = 1; // idprueba -- $_SESSION['idUsuario']
+
+    $rutaFoto = "../../statics/media/img/";
+    $nombreFoto = "FotoUsuario" . $idUsuario . ".png"; //foto ususario 
+    $fotoAlumno = $rutaFoto . $nombreFoto;
+    
+    //mover abajo para que también se pueda actualizar en la db
+    if(isset($_POST['guardar-foto'])){
+        if(move_uploaded_file($_FILES['foto-perfil-alumno']['tmp_name'], $fotoAlumno)){
+            $sqlGuardarFoto = "UPDATE infoGeneralUsuario SET foto_perfil = '$nombreFoto' WHERE idUsuario = $idUsuario";
+            mysqli_query($conexion, $sqlGuardarFoto);
+        }
+    }
+    if (!file_exists($fotoAlumno)) {
+    $fotoAlumno = $rutaFoto . "FotoPerfil.png";
+    }
 
     //consulta alumno
     $consultaAlumno = "SELECT idAlumno FROM infoAlumno WHERE idUsuario = $idUsuario";
