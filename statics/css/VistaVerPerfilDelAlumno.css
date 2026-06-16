@@ -1,0 +1,83 @@
+@font-face {
+    font-family: "Poppins";
+    src: url("../../statics/fonts/Poppins-Medium.ttf");
+}
+*{
+    font-family: "Poppins";
+}
+body{
+    justify-items: center;
+}
+.contenedor-apartados{
+    width: 100%;
+    height: 100vh;
+    gap: 35px;
+    justify-items: center;
+}
+.datos-alumno{
+    width: 95%;
+    height: 35vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #D9D9D9;
+    padding-right: 30px;
+}
+.dos-secciones{
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    flex-direction: row;
+    margin-top: 35px;
+    gap: 20px;
+    justify-content: center;
+}
+.respuestas-form {
+    width: 65%;
+    height: 100%;
+    /*overflow: auto;*/
+}
+.inferior-derecho{
+    width: 45%;
+}
+.editar-perfil{
+    background-color:  #002B79;
+    color: white;
+    border-radius: 20px;
+    border: none;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+}
+.guardar-foto{
+    background-color:  #FAB728;
+    color: white;
+    border-radius: 20px;
+    border: none;
+    height: 40px;
+    width: max-content;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: none;
+}
+.foto-perfil{
+    margin-left: 10vw;
+    width: 15vw;
+    height: auto;
+    border-radius: 50%;
+}
+.mostrar-abajo{
+    align-self: flex-end;
+    color: white;
+    justify-content: center;
+    width: max-content;
+    background-color: #60883F;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}

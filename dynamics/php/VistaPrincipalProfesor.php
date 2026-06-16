@@ -41,7 +41,10 @@
             </div>
         </div>
         <div class="contenedor-derecho">
-            <p class="formato-cuadrado">Estadísticas Globales</p>
+            
+            <a href="Estadisticas.php" class="formato-cuadrado" id="btn-recursos">
+                Estadísticas Globales    
+            </a>
             <div class="estadisticas-globales">
                 <!--Aquí genera las gráficas acerca de los grupos🦞-->
                 <div class="contenedor-grafica">Soy una gráfica lol</div>
