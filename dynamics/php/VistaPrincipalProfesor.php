@@ -28,7 +28,7 @@
         <article id="barra_lateral">
             <section  id="primero_barra_lateral"></section>
             <section id="segundo_barra_lateral"class="bloque_linea">
-                <a class="enlace"href="./actividades.html">
+                <a class="enlace"href="./AlumnosVistaProfesor.php">
                     <h3>ALUMNOS</h3>
                 </a>
             </section>
@@ -48,7 +48,7 @@
                 </a>
             </section>
             <section class="bloque_linea">
-                <a class="enlace"href="./proAnteriores.html">
+                <a class="enlace"href="./Estadisticas.php">
                    <h3>ESTADÍSTICAS</h3>
                 </a>
             </section>
@@ -58,7 +58,7 @@
     <div class="contenedor-principal">
         <div class="contenedor-izquierdo">
             <div class="contenedor-apartados">
-                <a href="AlumnosVistaProfesor.php" class="formato-cuadrado" id="btn-alumnos">ALUMNOS
+                <a href="./AlumnosVistaProfesor.php" class="formato-cuadrado" id="btn-alumnos">ALUMNOS
                     <img class="icono" src="../../statics/media/img/IconoAlumnos.png" alt="Ícono de alumno 🙋">
                 </a>
                 <a href="https://www.google.com" class="formato-cuadrado" id="btn-forms">FORMULARIOS
@@ -74,7 +74,7 @@
         </div>
         <div class="contenedor-derecho">
             
-            <a href="Estadisticas.php" class="estadisticas-globales">
+            <a href="./Estadisticas.php" class="estadisticas-globales">
                 Estadísticas    
                 <img class="icono" id="estadisticas" src="../../statics/media/img/IconoEstadisticas.png" alt="Ícono de Estadísticas">
             </a>
