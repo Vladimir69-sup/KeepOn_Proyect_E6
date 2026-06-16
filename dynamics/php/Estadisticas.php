@@ -43,6 +43,7 @@
                                 echo "<th>Nombre</th>";
                                 echo "<th>Calificación</th>";
                                 echo "<th>Puntos</th>";
+                                echo "<th>Riesgo de deserción</th>";
                                 echo "<th>Ver</th>";
                             echo "</tr>";
                         echo "</thead>";
@@ -63,9 +64,10 @@
                                 $resPromedio = $paqPromedio->fetch_array();
                                 if ($resPromedio['promedio'] !== null) {
                                         $promedioAlumno = sprintf('%0.2f', $resPromedio['promedio']);
-                                    } else {
-                                        $promedioAlumno = "Sin calificación";
-                                    }
+                                } 
+                                else {
+                                    $promedioAlumno = "Sin calificación";
+                                }
 
                                 //PUNTOS
                                 //alumno:
@@ -84,10 +86,30 @@
                                     $puntosObtenidosAlumno = $resPuntosAlumno['obtenidos'];
                                     $mostrarPuntos = $puntosObtenidosAlumno . "/" . $puntosTotales;
                                 }
+                                $cotaInferior = $puntosTotales / 2;
+                                $cotaSuperior = (2 * $puntosTotales) / 3;
+
+                                if($puntosObtenidosAlumno == 0 || $mostrarPuntos = "Aún no hay formularios"){
+                                    $impRiesgo = "Aún no hay datos del alumno";
+                                }
+                                else if($puntosObtenidosAlumno <= $cotaInferior){
+                                    $riesgo = 100; 
+                                    $impRiesgo = $riesgo . "% riesgo de deserción";
+                                }
+                                else if($puntosObtenidosAlumno >= $cotaSuperior){
+                                    $riesgo = 0;
+                                    $impRiesgo = $riesgo . "% riesgo de deserción";
+                                }
+                                else{
+                                    $riesgo = 200 * (2 -(3*$puntosObtenidosAlumno/$puntosTotales));
+                                    $impRiesgo = $riesgo . "% riesgo de deserción";
+                                }
+                                
                                 echo "<tr>";
                                 echo "<th>" . $nombreAlumno . "</th>";
                                 echo "<th>" . $promedioAlumno . "</th>";
                                 echo "<th>" . $mostrarPuntos . "</th>";
+                                echo "<th>" . $impRiesgo . "</th>";
                                 echo "<th><a href='VistaVerPerfilDelAlumno.php?idUsuario=" . $idAlumno . "'>👁️</a></th>";
                                 echo "</tr>";
                             }

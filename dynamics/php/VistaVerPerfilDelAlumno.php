@@ -6,12 +6,8 @@
     const DB = "keep_on_db";
 
     $conexion = mysqli_connect(DBHOST, DBUSER, PASSWORD, DB);
-    if (isset($_GET['idUsuario'])) {
-        $idUsuario = intval($_GET['idUsuario']); 
-    } else {
-        header("Location: Estadisticas.php");
-        exit;
-    }
+    $idUsuario = $_GET['idUsuario'];
+    
     $rutaFoto = "../../statics/media/img/";
     $nombreFoto = "FotoUsuario" . $idUsuario . ".png"; 
     $fotoAlumno = $rutaFoto . "FotoUsuario" . $idUsuario . ".png";
