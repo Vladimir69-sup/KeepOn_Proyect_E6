@@ -49,7 +49,7 @@
                 </a>
             </section>
             <section class="bloque_linea">
-                <a class="enlace"href="./proAnteriores.html">
+                <a class="enlace"href="./ProyectosPasados.php">
                    <h3>PROYECTOS ANTERIORES</h3>
                 </a>
             </section>
@@ -76,7 +76,7 @@
             </a>
         </seccion>
         <seccion id="tercero">
-            <a class="botones"id="masEte"href="./proAnteriores.html">
+            <a class="botones"id="masEte"href="./ProyectosPasados.php">
                     <h2>CONOCE MÁS SOBRE<br>LA ETE</h2>
                     <img  id="ete"alt="logo" src="../../statics/media/img/logo_ete.svg">
             </a>
