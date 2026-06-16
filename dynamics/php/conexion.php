@@ -1,6 +1,6 @@
 <?php
-    const DBHOST = "localhost";
-    const DBUSER = "root";
+    const DBHOST = "127.0.0.1"; 
+    const DBUSER = "root";     
     const PASSWORD = "";
     const DB = "keep_on_db";
 
@@ -12,3 +12,4 @@
     $conexion = connect();
 
 ?> 
+

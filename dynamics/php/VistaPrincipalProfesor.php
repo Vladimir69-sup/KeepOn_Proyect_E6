@@ -38,7 +38,7 @@
                 </a>
             </section>
             <section class="bloque_linea">
-                <a class="enlace"href="./recursos_apoyo.html">
+                <a class="enlace" href="./FormularioProfesores.php">
                     <h3>FORMULARIOS</h3>
                 </a>
             </section>
@@ -61,7 +61,7 @@
                 <a href="./AlumnosVistaProfesor.php" class="formato-cuadrado" id="btn-alumnos">ALUMNOS
                     <img class="icono" src="../../statics/media/img/IconoAlumnos.png" alt="Ícono de alumno 🙋">
                 </a>
-                <a href="https://www.google.com" class="formato-cuadrado" id="btn-forms">FORMULARIOS
+                <a href="./FormularioProfesores.php" class="formato-cuadrado" id="btn-forms">FORMULARIOS
                     <img class="icono" src="../../statics/media/img/IconoFormularios.png" alt="Ícono de formulario 🍀">
                 </a>
                 <a href="https://www.youtube.com/" class="formato-cuadrado" id="btn-actividades">ACTIVIDADES
