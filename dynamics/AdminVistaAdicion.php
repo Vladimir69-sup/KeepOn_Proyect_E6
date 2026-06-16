@@ -18,46 +18,51 @@
 <?php
     if(isset($_POST['tipo_usuario']) && $_POST['tipo_usuario'] == 'profesor'){
         echo '<form action="AdminVistaAdicion.php" method="POST">';
-            echo '<input type="submit" value="Regresar">';
+            echo '<input class="botones1" type="submit" value="Regresar">';
         echo '</form>';
-        echo '<form action="adicionUsuario.php" method="POST">';
+        echo '<form class="form" action="adicionUsuario.php" method="POST">';
             echo "<input type = 'hidden' name = 'tipo_usuario' value=' . profesor . '>";
-            echo '<input type="text" name="nombre_prof">';
+            echo '<div class="pt_izq">';
+            echo '<input class="inputs" type="text" name="nombre_prof">';
                 echo '<label>
                         Nombre(s)
                     </label>';
-            echo '<input type="text" name="apellido1">';
+            echo '<input class="inputs" type="text" name="apellido1">';
                 echo '<label>
                         Apellido Paterno
                     </label>';
-            echo '<input type="text" name="apellido2">';
+            echo '<input class="inputs" type="text" name="apellido2">';
                 echo '<label>
                         Apellido Materno
                     </label>';
-            echo '<input type="date" name="fecha_naci">';
+            echo '<input class="inputs" type="date" name="fecha_naci">';
                 echo '<label>
                         Fecha de nacimiento
                     </label>';
-            echo '<input type="text" name="matricula">';
+            echo '</div>';
+            echo '<div class="pt_drch">';            
+            echo '<input class="inputs" type="text" name="matricula">';
                 echo '<label>
                         Matricula
                     </label>';
-            echo '<input type="select" name="grupo">';
+            echo '<input class="inputs" type="select" name="grupo">';
                 echo '<label>
                         Grupo x
                     </label>';
-            echo '<input type="email" name="correo">';
+            echo '<input class="inputs" type="email" name="correo">';
                 echo '<label>
                         Correo
                     </label>';
-            echo '<input type="submit" value="Registrar">';
+            echo '</div>';
+            echo '<input class="botones2" type="submit" value="Registrar">';
         echo '</form>';
     } elseif(isset($_POST['tipo_usuario']) && $_POST['tipo_usuario'] == 'alumno'){
         echo '<form action="AdminVistaAdicion.php" method="POST">';
-            echo '<input type="submit" value="Regresar">';
+            echo '<input class="botones1" type="submit" value="Regresar">';
         echo '</form>';
-        echo '<form action="adicionUsuario.php" method="POST">';
+        echo '<form class="form" action="adicionUsuario.php" method="POST">';
             echo "<input type = 'hidden' name = 'tipo_usuario' value=' . alumno . '>";
+            echo '<div class="pt_izq">';
             echo '<input type="text" name="nombre_alumno">';
                 echo '<label>
                         Nombre(s)
@@ -74,6 +79,8 @@
                 echo '<label>
                         Fecha de nacimiento
                     </label>';
+            echo '</div>';
+            echo '<div class="pt_drch">';  
             echo '<input type="text" name="n_cuenta">';
                 echo '<label>
                         N. Cuenta
@@ -86,14 +93,16 @@
                 echo '<label>
                         Correo
                     </label>';
-            echo '<input type="submit" value="Registrar">';
+            echo '</div>';
+            echo '<input class="botones2" type="submit" value="Registrar">';
         echo '</form>';
     } elseif(isset($_POST['tipo_usuario']) && $_POST['tipo_usuario'] == 'admin'){
         echo '<form action="AdminVistaAdicion.php" method="POST">';
-            echo '<input type="submit" value="Regresar">';
+            echo '<input class="botones1" type="submit" value="Regresar">';
         echo '</form>';
-        echo '<form action="adicionUsuario.php" method="POST">';
+        echo '<form class="form" action="adicionUsuario.php" method="POST">';
             echo "<input type = 'hidden' name = 'tipo_usuario' value=' . admin . '>";
+            echo '<div class="pt_izq">';
             echo '<input type="text" name="nombre_admin">';
                 echo '<label>
                         Nombre(s)
@@ -110,6 +119,8 @@
                 echo '<label>
                         Fecha de nacimiento
                     </label>';
+            echo '</div>';
+            echo '<div class="pt_drch">';  
             echo '<input type="text" name="matricula">';
                 echo '<label>
                         Matricula
@@ -118,7 +129,8 @@
                 echo '<label>
                         Correo
                     </label>';
-            echo '<input type="submit" value="Registrar">';
+            echo '</div>';
+            echo '<input class="botones2" type="submit" value="Registrar">';
         echo '</form>';
     } else{
         echo '<div id = "titulo" >
@@ -140,9 +152,6 @@
                 </label>
                 <input type="submit" value="seleccionar">
             </form>
-        </div>
-        <div class = "foto">
-            <img src= "..\statics\media\img\user.png" alt = "foto de usuario">
         </div>';
     }
 
