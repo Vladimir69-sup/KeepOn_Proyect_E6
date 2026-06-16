@@ -1,38 +1,46 @@
 <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');    
     session_start(); 
-    include "conexion.php" ;
+    include "conexion.php";
 
     if (!isset($_SESSION['borrador_formulario'])) 
-        {
-            $_SESSION['borrador_formulario'] = 
-            [
-                'titulo' => '',
-                'descripcion' => '',
-                'grupo'=> '',
-                'preguntas' => []
-            ];
-        }
+    {
+        $_SESSION['borrador_formulario'] = 
+        [
+            'titulo' => '',
+            'descripcion' => '',
+            'grupo'=> '',
+            'preguntas' => []
+        ];
+    }
 
-            if (!isset($_SESSION['num_opciones_actual'])) 
-            {
-                $_SESSION['num_opciones_actual'] = 2; //contador de opciones
-            }
+    if (!isset($_SESSION['num_opciones_actual'])) 
+    {
+        $_SESSION['num_opciones_actual'] = 2; //contador de opciones
+    }
 
-        $borrador = &$_SESSION['borrador_formulario'];
-        $tipo_pregunta=$_GET['tipo'];
-        $rendimiento=0;
+    $borrador = &$_SESSION['borrador_formulario'];
+    $rendimiento=0;
+
 
         if($_SERVER["REQUEST_METHOD"] == "POST") 
         {
+            $tipo_pregunta=$_GET['tipo'] ?? '';
             $borrador['titulo'] = $_POST['titulo_formulario'] ?? $borrador['titulo'];
             $borrador['descripcion'] = $_POST['descripcion_formulario'] ?? $borrador['descripcion'];
             $borrador['grupo'] = $_POST['grupo'] ?? $borrador['grupo'];
+            $_SESSION['pregunta_fantasma']= $_POST['pregunta']?? ''; //por si agrega opciones a lo wey
+            $_SESSION['puntaje']=$_POST['puntaje'] ?? 1;
+            $_SESSION['opciones_fantasma']=$_POST['opciones']?? [];
+            
 
             if(isset($_POST['btn_agrega_opcion']))  // acaa lo de si pucho el boton de agregar opcionnn 
             {
                 $_SESSION['num_opciones_actual']++; //va sin espacio entre el ++ y los []
                 $_SESSION['pregunta_fantasma']= $_POST['pregunta']?? ''; //por si agrega opciones a lo wey
-                $_SESSION['puntaje']=$_POST['puntaje']?? 1;
+                $_SESSION['puntaje']=$_POST['puntaje'] ?? 1;
                 $_SESSION['opciones_fantasma']=$_POST['opciones']?? [];
                 header('location:./nuevo_renovado.php?estado=selecciona&tipo=' . $tipo_pregunta);
             }
@@ -51,13 +59,13 @@
                         'puntaje'=>$puntaje,
                         'opciones'=>[]
                     ];
+
                     if(($tipo_pregunta==='radio'|| $tipo_pregunta==='checkbox')&& isset($_POST['opciones']))
                     {
                         $variable_cont=0;
                         foreach($_POST['opciones'] as $texto_opcion)
-                        {
-                        $variable_cont ++;
-                        $contador_en_cadena = (string) $variable_cont;
+                        {                            
+                            $contador_en_cadena = (string) $variable_cont;
                             if(!($texto_opcion===""))
                             {
                                 $correcta=0;
@@ -76,22 +84,23 @@
                                     "correcta"=>$correcta,
                                 ];
                             }
+                            $variable_cont++;
                         }
                     }
-                    //REINCIA VALORES cuando recarga pag 
-                    $borrador['preguntas'][]= $pregunta_nueva;
-
-                    $_SESSION['num_opciones_actual']=2;//PARA REINCIARLO EN 2
-                    $_SESSION['pregunta_fantasma']= ''; //por si agrega opciones a lo wey
-                    $_SESSION['puntaje']=1;
-                    $_SESSION['opciones_fantasma']=[];
-                    header('location:./nuevo_renovado.php');
-                }
+                    
             }
+            $borrador['preguntas'][]= $pregunta_nueva;
+
+            $_SESSION['num_opciones_actual']=2;//PARA REINCIARLO EN 2
+            $_SESSION['pregunta_fantasma']= ''; //por si agrega opciones a lo wey
+            $_SESSION['puntaje']=1;
+            $_SESSION['opciones_fantasma']=[];
+            header('location:./nuevo_renovado.php');
+        }
             
             if(isset($_POST['publicar']))
             {
-                if(!(empty($borrador['titulo'])|| empty($borrador['descripcion']) || empty($borrador['grupo'])))
+                 if(!(empty($borrador['titulo']) || empty($borrador['descripcion']) || empty($borrador['grupo']) || empty($borrador['preguntas'])))
                 {
                     $titulo=$borrador['titulo']; 
                     $descripcion=$borrador['descripcion'];
@@ -104,8 +113,7 @@
                     }
 
                     //------------------meter info a base de datos-----------------------------
-                    $insercion1="INSERT INTO formulario (idGrupo,titulo,descripcion,rendimiento_esperado) 
-                            VALUES ($grupo,'$titulo','$descripcion',$rendimiento_total)";
+                    $insercion1="INSERT INTO formulario (idGrupo, titulo, descripcion, rendimiento_esperado) VALUES ($grupo,'$titulo','$descripcion',$rendimiento_total)";
                     mysqli_query($conexion,$insercion1); // se insertan esos datos sin id pero luego pedimos el id abajo q ya tendra pq insertamos algo 
 
                     //obtenemos el id del formulario que acabamos de agregar  arriba
@@ -123,8 +131,7 @@
                         $texto_pregunta = $pregunta['pregunta']; //obtenemos el texto de la pregunta actual 
                         $puntaje_pregunta = $pregunta['puntaje']; //obtenemos el puntaje de la pregunta actual
 
-                        $insercionPregunta = "INSERT INTO pregunta (pregunta, idFormulario, idTipoPregunta, puntaje_rendimiento)
-                            VALUES ('$texto_pregunta', $idFormularioAgregado, $idTipoPregunta, $puntaje_pregunta)"; //escribimos la sentencia sql de insercion
+                        $insercionPregunta = "INSERT INTO pregunta (pregunta, idFormulario, idTipoPregunta, puntaje_rendimiento) VALUES ('$texto_pregunta', $idFormularioAgregado, $idTipoPregunta, $puntaje_pregunta)"; //escribimos la sentencia sql de insercion
                         
                         mysqli_query($conexion , $insercionPregunta); //hacemos la insercion
                         $idPreguntaAgregada =  mysqli_insert_id($conexion); //obtenemos el ultimo id agregado a la base de datos que en este caso sería el de la pregunta
@@ -135,15 +142,16 @@
                             $texto_opcion = $opcion['opcion']; //texto de cada opcion
                             $correcta = $opcion['correcta']; //obtenemos si es correcta o no esta opcion
 
-                            $insercionOpcion= "INSERT INTO opcionPregunta (opcion, idPregunta, correcta) 
-                                VALUES ('$texto_opcion',$idPreguntaAgregada , $correcta)"; //sentencia sql de insercion
+                            $insercionOpcion= "INSERT INTO opcionPregunta (opcion, idPregunta, correcta) VALUES ('$texto_opcion',$idPreguntaAgregada , $correcta)"; //sentencia sql de insercion
                             mysqli_query($conexion, $insercionOpcion); //hacemos la insercion                       
                         }
                     }
                     //se reincian los valores 
                     $_SESSION['borrador_formulario'] = [];
                     $_SESSION['num_opciones_actual'] = 2;
-                    header("Location: FomularioProfesores.php"); //regrese a la pagina de formualrio(la lista) con boton de nuevo form    
+                    header("Location: ./FormularioProfesores.php"); //regrese a la pagina de formualrio(la lista) con boton de nuevo form    
+                }else{
+                    echo "<p>No puedes publicar un formulario sin preguntas.</p>";
                 }
             }
         }
@@ -169,18 +177,19 @@
         <section id="seccion_arriba">
         <div class="lado-izquierdo">
             <div class = "informacion-formulario">
-                <p>Título</p>
-                <textarea class="tex_info_formualio"name="titulo_formulario" id="titulo_formulario" placeholder="Ingresa el título del formulario..."></textarea>
-                <p>Descripción</p>
-                <textarea class="tex_info_formualio"name="descripcion_formulario" id="descripcion_formulario" placeholder="Ingresa una breve descripción"></textarea>
-
-                <div style='margin-top: 15px; text-align: right;'>;
-              <a class='boton-continuar' href='./nuevo_renovado.php?estado=selecciona' style='padding: 8px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 4px;'>Continuar</a>";
-                </div>";
+            <?php 
+                $tituloF = $borrador['titulo'] ?? '';
+                $descripcionF = $borrador['descripcion'] ?? '';
+                echo "<p>Título</p>";
+                echo "<textarea class='tex_info_formualio' name='titulo_formulario' id='titulo_formulario' placeholder='Ingresa el título del formulario...'>" . $tituloF . "</textarea>";                        
+                
+                echo "<p>Descripción</p>";
+                echo "<textarea class='tex_info_formualio' name='descripcion_formulario' id='descripcion_formulario' placeholder='Ingresa una breve descripción'>" . $descripcionF . "</textarea>";
+            ?>
 
             <?php
                 $maestroActual=1;  //cambiar al hacer merge por el id amestro d ela sesion actual 
-                $grupo="SELECT (nombreGrupo, idGrupo) FROM grupo WHERE idMaestro = $maestroActual";
+                $grupo="SELECT nombreGrupo, idGrupo FROM grupo WHERE idMaestro = $maestroActual";
                 $query=mysqli_query($conexion, $grupo);
                 
                 echo "<select class='grupo' name='grupo' id='grupo'required>";
@@ -194,10 +203,22 @@
 
                 }
 
-                echo "</select>"
+                echo "</select>";
             ?>
 
             </div>
+
+            <?php
+
+                
+                if((($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST['continuar']))) || (isset($_GET['estado']) &&  $_GET['estado'] === "selecciona")){
+                    echo "<div class='header-preguntas' style='font-size: 20p'>";
+                    echo "<a id='AgregarPregunta' href='nuevo_renovado.php?estado=selecciona' >+ Agregar Pregunta</a> "  ;               
+                    echo "</div>";
+                } else {
+                    echo "<input type='submit' name='continuar' id='boton_publicar' value='CONTINUAR'></input>";
+                }
+            ?>  
 
             
             <?php
@@ -215,10 +236,10 @@
                     {
                         case 'abierta': 
                             echo "<div  class='crear_pregunta' id='abierta'>";
-                            echo "                            <textarea name='pregunta' id='pregunta' rows='10' cols='50' placeholder='Escribe aquí la pregunta ...'></textarea>";
+                            echo "                        <textarea name='pregunta'id='pregunta' rows='10' cols='50' placeholder='Escribe aquí la pregunta ...'>" . $_SESSION['pregunta_fantasma'] . "</textarea>";
                             echo "                            <div class='puntaje_pregunta'>";
                             echo "                                <p>Puntaje de la pregunta (1 al 5):</p>";
-                            echo "                                <input type='number' class='puntajePregunta' name='puntaje' min='1' max='5' value='1' step='1'>";
+                            echo "                            <input type='number' class='puntajePregunta' name='puntaje' min='1' max='5' value='" . $_SESSION['puntaje'] . "'" . " step='1'>";
                             echo "                            </div>";
                             echo "                            <div class='botones_pregunta'>";
                             echo "                            <input type='submit' name='guardar_pregunta' class='boton-guardar' value='Guardar &#10Pregunta'></input>";
@@ -227,23 +248,24 @@
                             break;
                         case 'radio': 
                             echo "<div  class='crear_pregunta' id='radio'>";
-                            echo "                        <textarea name='pregunta'id='pregunta' rows='10' cols='50' placeholder='Escribe aquí la pregunta ...'></textarea>";
+                            echo "                        <textarea name='pregunta'id='pregunta' rows='10' cols='50' placeholder='Escribe aquí la pregunta ...'>" . $_SESSION['pregunta_fantasma'] . "</textarea>";
                             echo "                        <div class='puntaje_pregunta'>";
                             echo "                            <p>Puntaje de la pregunta (1 al 5):</p>";
-                            echo "                            <input type='number' class='puntajePregunta' name='puntaje' min='1' max='5' value='1' step='1'>";
+                            echo "                            <input type='number' class='puntajePregunta' name='puntaje' min='1' max='5' value='" . $_SESSION['puntaje'] . "'" . " step='1'>";
                             echo "                        </div>";
                             echo "                        <div class='opciones'>";
                             echo "                            <p class='posibles_respuestas'>Escribe las posibles respuestas (Selecciona cual es la correcta):</p>                      ";
                             echo "                            <div class='cuadro_almacena_opciones'>";
 
-                                        for ($i = 1; $i <= $_SESSION['num_opciones_actual']; $i++) 
-                                        {
-                                            echo "    <div class='opciones_input'>";
-                                            echo "       <input name='opciones[]' class='inputs_text' type='text' placeholder='Opción $i...'>";
-                                                // El value se vuelve dinámico gracias a $i (1, 2, 3...)
-                                            echo "        <input class='inputs_radio' type='radio' name='opcionRadioCorrecta' value='$i' class='radio_correcta'>";
-                                            echo "    </div>";
-                                        }
+                                                            for ($i = 0; $i <= $_SESSION['num_opciones_actual']; $i++) 
+                                                            {
+                                                                $texto_opcion = $_SESSION['opciones_fantasma'][$i] ?? '';
+                                                                echo "    <div class='opciones_input'>";
+                                                                echo "       <input name='opciones[]' class='inputs_text' type='text' placeholder='Opción $i...' value='" . $texto_opcion . "'>";
+                                                                    // El value se vuelve dinámico gracias a $i (1, 2, 3...)
+                                                                echo "        <input class='inputs_radio' type='radio' name='opcionRadioCorrecta' value='$i' class='radio_correcta'>";
+                                                                echo "    </div>";
+                                                            }
 
                             echo "                            </div>";
                             echo "                            <div><input type='submit' class='agregar_opcion_pregunta' name='btn_agrega_opcion' value='Agregar opción'></div>";
@@ -256,23 +278,24 @@
 
                         case 'checkbox':
                             echo "<div  class='crear_pregunta' id='checkbox'>";
-                            echo "                        <textarea name='pregunta' id='pregunta' rows='10' cols='50' placeholder='Escribe aquí la pregunta ...'></textarea>";
+                            echo "                        <textarea name='pregunta'id='pregunta' rows='10' cols='50' placeholder='Escribe aquí la pregunta ...'>" . $_SESSION['pregunta_fantasma'] . "</textarea>";
                             echo "                        <div class='puntaje_pregunta'>";
                             echo "                            <p>Puntaje de la pregunta (1 al 5):</p>";
-                            echo "                            <input type='number' class='puntajePregunta' name='puntaje' min='1' max='5' value='1' step='1'>";
+                            echo "                            <input type='number' class='puntajePregunta' name='puntaje' min='1' max='5' value='" . $_SESSION['puntaje'] . "'" . " step='1'>";
                             echo "                        </div>";
                             echo "                        <div class='opciones'>";
                             echo "                            <p class='posibles_respuestas'>Escribe las posibles respuestas (Selecciona las correctas):</p>                      ";
                             echo "                            <div class='cuadro_almacena_opciones'>";
 
-                                for ($i = 1; $i <= $_SESSION['num_opciones_actual']; $i++) 
-                                {
-                                    echo "    <div class='opciones_input'>";
-                                    echo "       <input name='opciones[]' class='inputs_text' type='text' placeholder='Opción $i...'>";
-                                    // CORRECCIÓN CLAVE: El name lleva [] para que PHP reciba un arreglo con todas las casillas marcadas
-                                    echo "        <input class='inputs_checkbox' type='checkbox' name='opcionCheckboxCorrecta[]' value='$i' class='radio_correcta'>";
-                                    echo "    </div>";
-                                }
+                                                            for ($i = 0; $i < $_SESSION['num_opciones_actual']; $i++) 
+                                                            {
+                                                                $texto_opcion = $_SESSION['opciones_fantasma'][$i] ?? '';
+                                                                echo "    <div class='opciones_input'>";
+                                                                 echo "       <input name='opciones[]' class='inputs_text' type='text' placeholder='Opción $i...' value='" . $texto_opcion . "'>";
+                                                                // CORRECCIÓN CLAVE: El name lleva [] para que PHP reciba un arreglo con todas las casillas marcadas
+                                                                echo "        <input class='inputs_checkbox' type='checkbox' name='opcionCheckboxCorrecta[]' value='$i' class='radio_correcta'>";
+                                                                echo "    </div>";
+                                                            }
 
                             echo "                            </div>";
                             echo "                            <div><input type='submit' class='agregar_opcion_pregunta' name='btn_agrega_opcion' value='Agregar opción'></div>";
@@ -290,9 +313,6 @@
         </div>
 
             <div class="contenedor-padre" id="mas_preguntas" >  
-                <div class="header-preguntas" style="font-size: 20px">
-                    <a id="AgregarPregunta" href="nuevo_renovado.php?estado=selecciona" >+ Agregar Pregunta</a>                  
-                </div>
 
                 <div class="lista_temporal">
                     <?php
@@ -302,6 +322,7 @@
                         echo "<ol>"; //de lsita ordenada 
                             foreach($borrador['preguntas'] as $p_lista)
                             {
+
                                 echo "<li style='margin-bottom: 10px;'>";
                                 echo "<strong>" . $p_lista['pregunta'] . "</strong> (" . $p_lista['puntaje'] . " pts)";
                                 
@@ -311,8 +332,12 @@
                                         echo "<ul style='list-style-type: circle;'>";
                                         foreach($p_lista['opciones'] as $o_lista)
                                         {
+                                            $correcta = "";
+                                            if($o_lista['correcta'] == 1)
+                                                $correcta = "✅";
                                             echo "<li>";
                                             echo $o_lista['opcion'];
+                                            echo $correcta;
                                             echo "</li>";
                                         }
                                     echo "</ul>";
@@ -328,7 +353,7 @@
                     }
                     ?>
                 </div>
-                </div>
+            </div>
         </div>
         </section>
         <input type="submit" name='publicar' id="boton_publicar" value='PUBLICAR'></input>;
